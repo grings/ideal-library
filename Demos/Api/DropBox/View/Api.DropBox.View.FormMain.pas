@@ -29,9 +29,9 @@ type
   private
   // Your private DropBox Developer AccessToken
     const
-    CAccessToken = 'z5bcG43gKeAAAAAAAAAAZFRKWz0UH25B729PDv0b5RkcogoBJMGHDQBOcJO3Bc_Q';
-    CRemotePath = '/SCL/';
-    CPngFileName = 'Match3_32.APK';
+    CAccessToken = '';
+    CRemotePath = '';
+    CPngFileName = '';
 
   var
     FUpdationProgressbar: Boolean;

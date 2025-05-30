@@ -156,9 +156,9 @@
         <VerInfo_Build>1</VerInfo_Build>
         <Android_NotificationAccentColor>#000000</Android_NotificationAccentColor>
         <EL_ApsEnvironment>true</EL_ApsEnvironment>
-        <Android_AppId>1:436792686856:android:364e2d40ed49f3d58954bd</Android_AppId>
-        <Android_ApiKey>AIzaSyBPsCIV6cBF-NmubrtaW-s42RNEIukf-eQ</Android_ApiKey>
-        <Android_GcmDefaultSenderId>436792686856</Android_GcmDefaultSenderId>
+        <Android_AppId></Android_AppId>
+        <Android_ApiKey></Android_ApiKey>
+        <Android_GcmDefaultSenderId></Android_GcmDefaultSenderId>
         <Android_ProjectId>salus-ciber-ludens</Android_ProjectId>
         <AUP_INTERNET>false</AUP_INTERNET>
         <AUP_ACCESS_COARSE_LOCATION>false</AUP_ACCESS_COARSE_LOCATION>

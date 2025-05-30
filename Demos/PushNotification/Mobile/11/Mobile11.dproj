@@ -248,10 +248,10 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Android)'!=''">
         <VerInfo_Build>1</VerInfo_Build>
-        <Android_AppId>1:527048111961:android:1393d81968e5be7d657e48</Android_AppId>
-        <Android_ApiKey>AIzaSyAyQu2FEgvdcTtWxzZygAkLLngSjTFsDwU</Android_ApiKey>
-        <Android_GcmDefaultSenderId>527048111961</Android_GcmDefaultSenderId>
-        <Android_ProjectId>testepushanderson-21380</Android_ProjectId>
+        <Android_AppId></Android_AppId>
+        <Android_ApiKey></Android_ApiKey>
+        <Android_GcmDefaultSenderId></Android_GcmDefaultSenderId>
+        <Android_ProjectId></Android_ProjectId>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
