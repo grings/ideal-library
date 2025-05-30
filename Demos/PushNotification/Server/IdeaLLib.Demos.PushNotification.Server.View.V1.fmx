@@ -1,0 +1,241 @@
+object frmV1: TfrmV1
+  Size.Width = 805.000000000000000000
+  Size.Height = 538.000000000000000000
+  Size.PlatformDefault = False
+  object lytBackground: TLayout
+    Align = Contents
+    Margins.Left = 5.000000000000000000
+    Margins.Top = 5.000000000000000000
+    Margins.Right = 5.000000000000000000
+    Margins.Bottom = 5.000000000000000000
+    Size.Width = 795.000000000000000000
+    Size.Height = 528.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+    TabStop = False
+    OnPainting = lytBackgroundPainting
+    object Label3: TLabel
+      Align = Top
+      Position.Y = 398.000000000000000000
+      Size.Width = 795.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Log'
+      TabOrder = 4
+      TabStop = False
+    end
+    object Layout3: TLayout
+      Align = Top
+      Position.Y = 37.000000000000000000
+      Size.Width = 795.000000000000000000
+      Size.Height = 46.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      TabStop = False
+      object Label7: TLabel
+        Align = Top
+        Cursor = crHelp
+        HitTest = True
+        Size.Width = 795.000000000000000000
+        Size.Height = 17.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'JSON file path: Service Account - Private Key (?)'
+        TabOrder = 1
+        TabStop = False
+        OnClick = Label7Click
+      end
+      object edtPrivateKeyJsonPath: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        Align = Top
+        TabOrder = 0
+        Position.Y = 17.000000000000000000
+        Hint = 'JsonPrivateKeyPath'
+        Size.Width = 795.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        OnChangeTracking = edtPrivateKeyJsonPathChangeTracking
+      end
+    end
+    object memoLog: TMemo
+      Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+      DataDetectorTypes = []
+      ReadOnly = True
+      Align = Client
+      Size.Width = 795.000000000000000000
+      Size.Height = 108.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 7
+      TabStop = False
+      Viewport.Width = 791.000000000000000000
+      Viewport.Height = 104.000000000000000000
+    end
+    object memoDeviceToken: TMemo
+      Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+      DataDetectorTypes = []
+      OnChangeTracking = memoDeviceTokenChangeTracking
+      Align = Top
+      Position.Y = 190.000000000000000000
+      Size.Width = 795.000000000000000000
+      Size.Height = 81.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      Viewport.Width = 791.000000000000000000
+      Viewport.Height = 77.000000000000000000
+    end
+    object Label2: TLabel
+      Align = Top
+      Position.Y = 168.000000000000000000
+      Size.Width = 795.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Device Token (1 device token per line)'
+      TabOrder = 5
+      TabStop = False
+    end
+    object Label9: TLabel
+      Align = MostTop
+      AutoSize = True
+      Cursor = crHelp
+      StyledSettings = []
+      HitTest = True
+      Margins.Bottom = 10.000000000000000000
+      Size.Width = 795.000000000000000000
+      Size.Height = 27.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Family = '(Default)'
+      TextSettings.Font.Size = 20.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.FontColor = claRed
+      Text = 'This V1 is based on Kastri repository, read the comments'
+      TabOrder = 10
+      TabStop = False
+      OnClick = Label9Click
+    end
+    object Layout2: TLayout
+      Align = Top
+      Position.Y = 83.000000000000000000
+      Size.Width = 795.000000000000000000
+      Size.Height = 85.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      TabStop = False
+      object CheckBox1: TCheckBox
+        Hint = 
+          'While FALSE, the notification will not be shown, the APP will re' +
+          'ceive it only if opened'
+        IsChecked = True
+        Position.X = 8.000000000000000000
+        Position.Y = 8.000000000000000000
+        TabOrder = 7
+        TabStop = False
+        Text = 'Show Notification'
+        ParentShowHint = False
+        ShowHint = True
+      end
+      object edtNotificationBody: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 2
+        Text = 'Body'
+        Position.X = 296.000000000000000000
+        Position.Y = 48.000000000000000000
+        Size.Width = 137.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object edtChannelId: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 0
+        FilterChar = '0123456789'
+        Position.X = 8.000000000000000000
+        Position.Y = 48.000000000000000000
+        Size.Width = 137.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object edtNotificationTitle: TEdit
+        Touch.InteractiveGestures = [LongTap, DoubleTap]
+        TabOrder = 1
+        Text = 'Message Title'
+        Position.X = 152.000000000000000000
+        Position.Y = 48.000000000000000000
+        Size.Width = 137.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+      end
+      object Label4: TLabel
+        Position.X = 8.000000000000000000
+        Position.Y = 32.000000000000000000
+        Text = 'Channel ID'
+        TabOrder = 5
+        TabStop = False
+      end
+      object Label5: TLabel
+        Position.X = 152.000000000000000000
+        Position.Y = 32.000000000000000000
+        Text = 'Title'
+        TabOrder = 4
+        TabStop = False
+      end
+      object Label6: TLabel
+        Position.X = 296.000000000000000000
+        Position.Y = 32.000000000000000000
+        Text = 'Body'
+        TabOrder = 3
+        TabStop = False
+      end
+      object Button1: TButton
+        Position.X = 441.000000000000000000
+        Position.Y = 48.000000000000000000
+        TabOrder = 6
+        TabStop = False
+        Text = 'Send'
+        OnClick = Button1Click
+      end
+    end
+    object memoData: TMemo
+      Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+      DataDetectorTypes = []
+      OnChangeTracking = memoDataChangeTracking
+      Align = Top
+      Position.Y = 317.000000000000000000
+      Size.Width = 795.000000000000000000
+      Size.Height = 81.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+      Viewport.Width = 791.000000000000000000
+      Viewport.Height = 77.000000000000000000
+    end
+    object Label1: TLabel
+      Align = Top
+      Position.Y = 295.000000000000000000
+      Size.Width = 795.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Data (Extra info. JSON Format. UTF-8)'
+      TabOrder = 6
+      TabStop = False
+    end
+    object Label8: TLabel
+      Align = Top
+      AutoSize = True
+      Cursor = crHelp
+      StyledSettings = []
+      HitTest = True
+      Margins.Top = 10.000000000000000000
+      Position.Y = 281.000000000000000000
+      Size.Width = 795.000000000000000000
+      Size.Height = 14.000000000000000000
+      Size.PlatformDefault = False
+      TextSettings.Font.Family = '(Default)'
+      TextSettings.Font.Size = 10.000000000000000000
+      TextSettings.Font.StyleExt = {00070000000000000004000000}
+      TextSettings.FontColor = claRed
+      Text = 
+        'ShowNotification=False, it will send a Silent notification. Rese' +
+        'rved Key name: isSilent. JSON is case sensitive'
+      TabOrder = 9
+      TabStop = False
+      OnClick = Label9Click
+    end
+  end
+end

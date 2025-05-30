@@ -1,0 +1,100 @@
+object FrmCustomComboBox: TFrmCustomComboBox
+  Size.Width = 340.000000000000000000
+  Size.Height = 580.000000000000000000
+  Size.PlatformDefault = False
+  TabStop = False
+  object lytBackground: TLayout
+    Align = Contents
+    Size.Width = 340.000000000000000000
+    Size.Height = 580.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    TabStop = False
+    object rctBackground: TRectangle
+      Align = Contents
+      Fill.Color = claBlack
+      Opacity = 0.300000011920929000
+      Size.Width = 340.000000000000000000
+      Size.Height = 580.000000000000000000
+      Size.PlatformDefault = False
+      Stroke.Kind = None
+    end
+    object lytInside: TLayout
+      Align = VertCenter
+      Margins.Left = 40.000000000000000000
+      Margins.Right = 40.000000000000000000
+      Position.X = 40.000000000000000000
+      Position.Y = 152.000000000000000000
+      Size.Width = 260.000000000000000000
+      Size.Height = 276.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      TabStop = False
+      object rctInsideBackground: TRectangle
+        Align = Contents
+        ClipChildren = True
+        Fill.Color = claWhite
+        Size.Width = 260.000000000000000000
+        Size.Height = 276.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Kind = None
+        XRadius = 5.000000000000000000
+        YRadius = 5.000000000000000000
+        object lytSearch: TLayout
+          Align = Top
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 5.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 2.000000000000000000
+          Position.X = 2.000000000000000000
+          Position.Y = 5.000000000000000000
+          Size.Width = 256.000000000000000000
+          Size.Height = 35.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 0
+          TabStop = False
+          object edtSearch: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Client
+            TabOrder = 0
+            TabStop = False
+            TextSettings.HorzAlign = Center
+            Size.Width = 256.000000000000000000
+            Size.Height = 35.000000000000000000
+            Size.PlatformDefault = False
+            StyledSettings = [Size, Style]
+            object SearchEditButton1: TSearchEditButton
+              CanFocus = False
+              Cursor = crArrow
+              Size.Width = 28.000000000000000000
+              Size.Height = 31.000000000000000000
+              Size.PlatformDefault = False
+              TabOrder = 0
+            end
+          end
+        end
+        object vtsList: TVertScrollBox
+          Align = Client
+          Margins.Left = 2.000000000000000000
+          Margins.Top = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Margins.Bottom = 5.000000000000000000
+          Size.Width = 256.000000000000000000
+          Size.Height = 227.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 1
+          TabStop = False
+          Viewport.Width = 256.000000000000000000
+          Viewport.Height = 227.000000000000000000
+        end
+      end
+      object ShadowEffect1: TShadowEffect
+        Distance = 3.000000000000000000
+        Direction = 45.000000000000000000
+        Softness = 0.300000011920929000
+        Opacity = 0.600000023841857900
+        ShadowColor = claBlack
+      end
+    end
+  end
+end

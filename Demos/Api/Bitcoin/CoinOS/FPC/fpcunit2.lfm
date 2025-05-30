@@ -1,0 +1,758 @@
+object Form2: TForm2
+  Left = 348
+  Height = 573
+  Top = 165
+  Width = 1463
+  Caption = 'Form2'
+  ClientHeight = 573
+  ClientWidth = 1463
+  OnCreate = FormCreate
+  OnPaint = FormPaint
+  OnShow = FormShow
+  Position = poDesktopCenter
+  LCLVersion = '3.4.0.0'
+  WindowState = wsMaximized
+  object pnlQrCodePicBackground: TPanel
+    Left = 8
+    Height = 546
+    Top = 24
+    Width = 1018
+    Align = alCustom
+    BevelOuter = bvNone
+    Caption = ' '
+    ClientHeight = 546
+    ClientWidth = 1018
+    TabOrder = 1
+    Visible = False
+    object pnlQrCode: TPanel
+      Left = 504
+      Height = 250
+      Top = 166
+      Width = 200
+      Caption = ' '
+      ClientHeight = 250
+      ClientWidth = 200
+      TabOrder = 0
+      object Panel7: TPanel
+        Left = 1
+        Height = 50
+        Top = 1
+        Width = 198
+        Align = alTop
+        Caption = ' '
+        ClientHeight = 50
+        ClientWidth = 198
+        TabOrder = 0
+        object btnQrCodeClose: TButton
+          Left = 122
+          Height = 48
+          Top = 1
+          Width = 75
+          Align = alRight
+          Caption = 'Close'
+          TabOrder = 0
+          OnClick = btnQrCodeCloseClick
+        end
+      end
+      object imgQrCode: TImage
+        Left = 1
+        Height = 198
+        Top = 51
+        Width = 198
+        Align = alClient
+      end
+    end
+  end
+  object Label1: TLabel
+    Left = 0
+    Height = 42
+    Top = 0
+    Width = 1463
+    Align = alTop
+    Alignment = taCenter
+    Caption = 'This is a demo example for the integration with coinos.io Lightning Wallet'#13#10'Please, check their documentation https://coinos.io/docs'
+    Color = clRed
+    Font.Color = clRed
+    Font.Height = -16
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label2: TLabel
+    Left = 0
+    Height = 75
+    Top = 42
+    Width = 1463
+    Align = alTop
+    Alignment = taCenter
+    Caption = 'Personal speech: '#13#10'Para o "Chorão", se vc vai copiar minha solução, tenha a mínima decência de dar os créditos'#13#10'Não venha com historinha de processar e blablabla'
+    Color = clRed
+    Font.Color = clRed
+    Font.Height = -19
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object PageControl1: TPageControl
+    Left = 0
+    Height = 456
+    Top = 117
+    Width = 1463
+    ActivePage = tbsDemo
+    Align = alClient
+    TabIndex = 0
+    TabOrder = 0
+    object tbsDemo: TTabSheet
+      Caption = 'tbsDemo'
+      ClientHeight = 428
+      ClientWidth = 1455
+      object Panel5: TPanel
+        Left = 0
+        Height = 428
+        Top = 0
+        Width = 1210
+        Align = alClient
+        BevelOuter = bvNone
+        Caption = ' '
+        ClientHeight = 428
+        ClientWidth = 1210
+        TabOrder = 0
+        object Panel1: TPanel
+          Left = 0
+          Height = 32
+          Top = 72
+          Width = 1210
+          Align = alTop
+          BevelOuter = bvSpace
+          Caption = ' '
+          ClientHeight = 32
+          ClientWidth = 1210
+          TabOrder = 0
+          object edtExportedToken: TEdit
+            Left = 82
+            Height = 30
+            Top = 1
+            Width = 1127
+            Align = alClient
+            EchoMode = emPassword
+            PasswordChar = '*'
+            TabOrder = 0
+            OnChange = edtExportedTokenChange
+          end
+          object Label3: TLabel
+            Left = 1
+            Height = 30
+            Top = 1
+            Width = 81
+            Align = alLeft
+            Alignment = taCenter
+            Caption = 'Exported Token'
+            Layout = tlCenter
+            ParentBidiMode = False
+          end
+        end
+        object Panel4: TPanel
+          Left = 0
+          Height = 156
+          Top = 272
+          Width = 1210
+          Align = alClient
+          BevelOuter = bvNone
+          Caption = ' '
+          ClientHeight = 156
+          ClientWidth = 1210
+          TabOrder = 1
+          object lbxJson: TListBox
+            Left = 0
+            Height = 156
+            Top = 0
+            Width = 200
+            Align = alLeft
+            ItemHeight = 0
+            TabOrder = 0
+            OnClick = lbxJsonClick
+          end
+          object Memo1: TMemo
+            Left = 200
+            Height = 156
+            Top = 0
+            Width = 1010
+            Align = alClient
+            Lines.Strings = (
+              'Memo1'
+            )
+            TabOrder = 1
+            WordWrap = False
+          end
+        end
+        object Panel3: TPanel
+          Left = 0
+          Height = 72
+          Top = 0
+          Width = 1210
+          Align = alTop
+          BevelOuter = bvSpace
+          Caption = ' '
+          ClientHeight = 72
+          ClientWidth = 1210
+          TabOrder = 2
+          object Panel8: TPanel
+            Left = 1
+            Height = 70
+            Top = 1
+            Width = 303
+            Align = alLeft
+            BevelOuter = bvSpace
+            Caption = ' '
+            ClientHeight = 70
+            ClientWidth = 303
+            TabOrder = 0
+            object edtPassword: TEdit
+              Left = 72
+              Height = 23
+              Top = 36
+              Width = 136
+              EchoMode = emPassword
+              PasswordChar = '*'
+              TabOrder = 0
+              OnChange = edtExportedTokenChange
+            end
+            object Label13: TLabel
+              Left = 8
+              Height = 15
+              Top = 16
+              Width = 53
+              Caption = 'Username'
+            end
+            object edtUsername: TEdit
+              Left = 72
+              Height = 23
+              Top = 8
+              Width = 136
+              TabOrder = 1
+            end
+            object Label17: TLabel
+              Left = 8
+              Height = 15
+              Top = 44
+              Width = 56
+              Caption = 'Photo URL'
+            end
+            object btnRegister: TButton
+              Left = 216
+              Height = 25
+              Top = 6
+              Width = 75
+              Caption = 'Register'
+              TabOrder = 2
+              OnClick = btnRegisterClick
+            end
+            object btnLogin: TButton
+              Left = 216
+              Height = 25
+              Top = 34
+              Width = 75
+              Caption = 'Login'
+              TabOrder = 3
+              OnClick = btnLoginClick
+            end
+          end
+          object gbxPublicEndpoints: TGroupBox
+            Left = 304
+            Height = 70
+            Top = 1
+            Width = 905
+            Align = alClient
+            Caption = '   Public Endpoints   '
+            ClientHeight = 50
+            ClientWidth = 901
+            TabOrder = 1
+            object Label18: TLabel
+              Left = 8
+              Height = 15
+              Top = 104
+              Width = 48
+              Caption = 'Currency'
+            end
+            object btnGetRates: TButton
+              Left = 8
+              Height = 25
+              Top = 0
+              Width = 75
+              Caption = 'GET rates'
+              TabOrder = 0
+              OnClick = btnGetRatesClick
+            end
+          end
+        end
+        object ScrollBox1: TScrollBox
+          Left = 0
+          Height = 168
+          Top = 104
+          Width = 1210
+          HorzScrollBar.Page = 1206
+          HorzScrollBar.Position = 42
+          VertScrollBar.Page = 1
+          VertScrollBar.Visible = False
+          Align = alTop
+          ClientHeight = 147
+          ClientWidth = 1206
+          TabOrder = 3
+          OnClick = ScrollBox1Click
+          object gbxProfile: TGroupBox
+            Left = 0
+            Height = 147
+            Top = 0
+            Width = 312
+            Align = alLeft
+            Caption = '   Profile   '
+            ClientHeight = 127
+            ClientWidth = 308
+            TabOrder = 0
+            object Label12: TLabel
+              Left = 8
+              Height = 15
+              Top = 48
+              Width = 53
+              Caption = 'Username'
+            end
+            object edtProfileUsername: TEdit
+              Left = 72
+              Height = 23
+              Top = 40
+              Width = 136
+              TabOrder = 0
+            end
+            object Label14: TLabel
+              Left = 8
+              Height = 15
+              Top = 76
+              Width = 56
+              Caption = 'Photo URL'
+            end
+            object edtProfilePictureUrl: TEdit
+              Left = 72
+              Height = 23
+              Top = 68
+              Width = 136
+              TabOrder = 1
+            end
+            object Label15: TLabel
+              Left = 8
+              Height = 15
+              Top = 104
+              Width = 48
+              Caption = 'Currency'
+            end
+            object btnGetMe: TButton
+              Left = 8
+              Height = 25
+              Top = 0
+              Width = 75
+              Caption = 'GET me'
+              TabOrder = 2
+              OnClick = btnGetMeClick
+            end
+            object btnPostUser: TButton
+              Left = 88
+              Height = 25
+              Top = 0
+              Width = 75
+              Caption = 'POST user'
+              TabOrder = 3
+              OnClick = btnPostUserClick
+            end
+            object cbxProfileCurrency: TComboBox
+              Left = 72
+              Height = 23
+              Top = 96
+              Width = 136
+              ItemHeight = 15
+              Items.Strings = (
+                'BRL'
+                'CAD'
+                'USD'
+              )
+              TabOrder = 4
+            end
+            object Label16: TLabel
+              Left = 256
+              Height = 15
+              Top = 48
+              Width = 44
+              Alignment = taRightJustify
+              Caption = 'Balance:'
+            end
+            object lblProfileBalanceSatoshi: TLabel
+              Left = 216
+              Height = 15
+              Top = 76
+              Width = 84
+              Alignment = taRightJustify
+              AutoSize = False
+              Caption = '0 sats'
+            end
+            object lblProfileBalanceFiat: TLabel
+              Left = 216
+              Height = 15
+              Top = 104
+              Width = 84
+              Alignment = taRightJustify
+              AutoSize = False
+              Caption = '0 fiat'
+              ParentBidiMode = False
+            end
+          end
+          object gbxLnInvoiceCreate: TGroupBox
+            Left = 312
+            Height = 147
+            Top = 0
+            Width = 312
+            Align = alLeft
+            Caption = '   Lightning Invoice   '
+            ClientHeight = 127
+            ClientWidth = 308
+            TabOrder = 1
+            object Label5: TLabel
+              Left = 0
+              Height = 15
+              Top = 0
+              Width = 308
+              Align = alTop
+              Alignment = taCenter
+              Caption = 'Remember that LN uses Satoshis'
+              Color = clRed
+              Font.Color = clRed
+              ParentColor = False
+              ParentFont = False
+            end
+            object Label6: TLabel
+              Left = 8
+              Height = 15
+              Top = 48
+              Width = 53
+              Caption = 'WebHook'
+            end
+            object edtInvoiceLNWebHook: TEdit
+              Left = 72
+              Height = 23
+              Top = 40
+              Width = 136
+              TabOrder = 0
+            end
+            object edtInvoiceLNSecret: TEdit
+              Left = 216
+              Height = 23
+              Top = 40
+              Width = 80
+              TabOrder = 1
+            end
+            object Label7: TLabel
+              Left = 216
+              Height = 15
+              Top = 24
+              Width = 32
+              Caption = 'Secret'
+            end
+            object Label8: TLabel
+              Left = 8
+              Height = 15
+              Top = 76
+              Width = 49
+              Caption = 'Amount*'
+            end
+            object edtInvoiceLNAmount: TEdit
+              Left = 72
+              Height = 23
+              Top = 68
+              Width = 136
+              TabOrder = 2
+            end
+            object edtGetInvoice: TEdit
+              Left = 72
+              Height = 23
+              Top = 96
+              Width = 136
+              TabOrder = 3
+            end
+            object Label9: TLabel
+              Left = 8
+              Height = 15
+              Top = 104
+              Width = 38
+              Caption = 'Invoice'
+            end
+            object btnInvoiceLNCreate: TButton
+              Left = 216
+              Height = 25
+              Top = 68
+              Width = 75
+              Caption = 'Create'
+              TabOrder = 4
+              OnClick = btnInvoiceLNCreateClick
+            end
+            object btnCheckInvoice: TButton
+              Left = 216
+              Height = 25
+              Top = 96
+              Width = 75
+              Caption = 'Check'
+              TabOrder = 5
+              OnClick = btnCheckInvoiceClick
+            end
+          end
+          object gbxLnInvoicePay: TGroupBox
+            Left = 624
+            Height = 147
+            Top = 0
+            Width = 312
+            Align = alLeft
+            Caption = '   Pay LN Invoice   '
+            ClientHeight = 127
+            ClientWidth = 308
+            TabOrder = 2
+            object Label11: TLabel
+              Left = 0
+              Height = 30
+              Top = 0
+              Width = 308
+              Align = alTop
+              Alignment = taCenter
+              Caption = 'Do not pay invoices created by your same Exported Token account'
+              Color = clRed
+              Font.Color = clRed
+              ParentColor = False
+              ParentFont = False
+              WordWrap = True
+            end
+            object Label19: TLabel
+              Left = 8
+              Height = 15
+              Top = 48
+              Width = 38
+              Caption = 'Invoice'
+            end
+            object edtPayInvoice: TEdit
+              Left = 72
+              Height = 23
+              Top = 40
+              Width = 219
+              TabOrder = 0
+            end
+            object Label21: TLabel
+              Left = 8
+              Height = 15
+              Top = 76
+              Width = 44
+              Caption = 'Max Fee'
+            end
+            object edtMaxFee: TEdit
+              Left = 72
+              Height = 23
+              Top = 68
+              Width = 136
+              Alignment = taCenter
+              NumbersOnly = True
+              TabOrder = 1
+              Text = '1'
+            end
+            object btnPay: TButton
+              Left = 216
+              Height = 25
+              Top = 68
+              Width = 75
+              Caption = 'Pay'
+              TabOrder = 2
+              OnClick = btnPayClick
+            end
+            object Label20: TLabel
+              Cursor = crHandPoint
+              Left = 8
+              Height = 15
+              Top = 104
+              Width = 35
+              Alignment = taCenter
+              Caption = 'Errors?'
+              Color = clRed
+              Font.Color = clRed
+              ParentColor = False
+              ParentFont = False
+              WordWrap = True
+              OnClick = Label20Click
+            end
+          end
+          object gbxLnInvoicePay1: TGroupBox
+            Left = 936
+            Height = 147
+            Top = 0
+            Width = 312
+            Align = alLeft
+            Caption = '   Pay LN Invoice   '
+            ClientHeight = 127
+            ClientWidth = 308
+            TabOrder = 3
+            object Label22: TLabel
+              Left = 0
+              Height = 15
+              Top = 0
+              Width = 308
+              Align = alTop
+              Alignment = taCenter
+              Caption = 'List of payments sent and received'
+              Color = clRed
+              Font.Color = clRed
+              ParentColor = False
+              ParentFont = False
+              WordWrap = True
+            end
+            object Label23: TLabel
+              Left = 8
+              Height = 15
+              Top = 72
+              Width = 27
+              Caption = 'Limit'
+            end
+            object Label24: TLabel
+              Left = 8
+              Height = 15
+              Top = 100
+              Width = 32
+              Caption = 'Offset'
+            end
+            object edtPaymentsOffset: TEdit
+              Left = 72
+              Height = 23
+              Top = 92
+              Width = 90
+              Alignment = taCenter
+              NumbersOnly = True
+              TabOrder = 0
+              Text = '0'
+            end
+            object btnGetPayments: TButton
+              Left = 168
+              Height = 25
+              Top = 90
+              Width = 75
+              Caption = 'Get'
+              TabOrder = 1
+              OnClick = btnGetPaymentsClick
+            end
+            object edtPaymentsLimit: TEdit
+              Left = 72
+              Height = 23
+              Top = 64
+              Width = 90
+              Alignment = taCenter
+              NumbersOnly = True
+              TabOrder = 2
+              Text = '0'
+            end
+            object dedtPaymentsFrom: TMaskEdit
+              Left = 46
+              Height = 23
+              Top = 34
+              Width = 64
+              EnableSets = False
+              MaxLength = 10
+              TabOrder = 3
+              EditMask = '!99/99/9999;1;_'
+              Text = '  /  /    '
+              SpaceChar = '_'
+            end
+            object Label25: TLabel
+              Left = 8
+              Height = 15
+              Top = 42
+              Width = 28
+              Caption = 'From'
+            end
+            object dedtPaymentsTo: TMaskEdit
+              Left = 152
+              Height = 23
+              Top = 34
+              Width = 64
+              EnableSets = False
+              MaxLength = 10
+              TabOrder = 4
+              EditMask = '!99/99/9999;1;_'
+              Text = '  /  /    '
+              SpaceChar = '_'
+            end
+            object Label26: TLabel
+              Left = 125
+              Height = 15
+              Top = 42
+              Width = 11
+              Caption = 'to'
+            end
+          end
+        end
+      end
+      object Panel6: TPanel
+        Left = 1215
+        Height = 428
+        Top = 0
+        Width = 240
+        Align = alRight
+        BevelOuter = bvNone
+        Caption = ' '
+        ClientHeight = 428
+        ClientWidth = 240
+        TabOrder = 1
+        object Label4: TLabel
+          Left = 0
+          Height = 15
+          Top = 0
+          Width = 240
+          Align = alTop
+          Alignment = taCenter
+          Caption = 'Beauty JSON'
+          Layout = tlCenter
+          ParentBidiMode = False
+        end
+        object memBeautyJson: TMemo
+          Left = 0
+          Height = 388
+          Top = 15
+          Width = 240
+          Align = alClient
+          Lines.Strings = (
+            'memBeautyJson'
+          )
+          ScrollBars = ssAutoVertical
+          TabOrder = 0
+          WordWrap = False
+        end
+        object btnQrCodeFromInvoice: TButton
+          Left = 0
+          Height = 25
+          Top = 403
+          Width = 240
+          Align = alBottom
+          Caption = 'QrCode'
+          TabOrder = 1
+          OnClick = btnQrCodeFromInvoiceClick
+        end
+      end
+      object Splitter1: TSplitter
+        Left = 1210
+        Height = 428
+        Top = 0
+        Width = 5
+        Align = alRight
+        ResizeAnchor = akRight
+      end
+    end
+    object tbsInfo: TTabSheet
+      Caption = 'tbsInfo'
+      ClientHeight = 428
+      ClientWidth = 1455
+      object Label10: TLabel
+        Left = 0
+        Height = 1
+        Top = 0
+        Width = 1
+      end
+    end
+  end
+end

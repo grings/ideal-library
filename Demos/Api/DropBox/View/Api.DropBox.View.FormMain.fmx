@@ -1,0 +1,111 @@
+object FormMain: TFormMain
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 560
+  ClientWidth = 340
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object btnCreateFolder: TButton
+    Align = Bottom
+    Position.Y = 510.000000000000000000
+    Size.Width = 340.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 5
+    Text = 'Create Folder'
+    OnClick = btnUploadClick
+  end
+  object btnDelete: TButton
+    Align = Bottom
+    Position.Y = 410.000000000000000000
+    Size.Width = 340.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    Text = 'Delete'
+    OnClick = btnUploadClick
+  end
+  object btnDownload: TButton
+    Align = Bottom
+    Position.Y = 310.000000000000000000
+    Size.Width = 340.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    Text = 'Download'
+    OnClick = btnDownloadClick
+  end
+  object btnListFolder: TButton
+    Align = Bottom
+    Position.Y = 460.000000000000000000
+    Size.Width = 340.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Text = 'List Folder'
+    OnClick = btnUploadClick
+  end
+  object btnUpload: TButton
+    Align = Bottom
+    Position.Y = 260.000000000000000000
+    Size.Width = 340.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 6
+    Text = 'Upload'
+    OnClick = btnUploadClick
+  end
+  object ProgressBar1: TProgressBar
+    Align = Bottom
+    Orientation = Horizontal
+    Position.Y = 240.000000000000000000
+    Size.Width = 340.000000000000000000
+    Size.Height = 20.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Memo1: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Lines.Strings = (
+      'For this example I'#39'm using a PNG file.'
+      'It'#39's been saved on .\assets\internal'
+      ''
+      
+        'PLEASE, do Upload first , then Download after, this way will be ' +
+        'better hahaha'
+      ''
+      'Take a look at the source code for more tips ;)'
+      ''
+      'Do you have ANY doubt?'
+      'PLEASE, take a look on the documentation first.'
+      'Thank you so much.')
+    TextSettings.WordWrap = True
+    Align = Client
+    Size.Width = 340.000000000000000000
+    Size.Height = 240.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 8
+    Viewport.Width = 336.000000000000000000
+    Viewport.Height = 236.000000000000000000
+    object AniIndicator1: TAniIndicator
+      Align = Bottom
+      Position.Y = 186.000000000000000000
+      Size.Width = 336.000000000000000000
+      Size.Height = 50.000000000000000000
+      Size.PlatformDefault = False
+    end
+  end
+  object btnDownloadRange: TButton
+    Align = Bottom
+    Position.Y = 360.000000000000000000
+    Size.Width = 340.000000000000000000
+    Size.Height = 50.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    Text = 'Download Range'
+    OnClick = btnDownloadClick
+  end
+end

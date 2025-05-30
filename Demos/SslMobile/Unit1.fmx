@@ -1,0 +1,91 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object GroupBox1: TGroupBox
+    Align = Top
+    Size.Width = 640.000000000000000000
+    Size.Height = 81.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    object rdbIndy: TRadioButton
+      Align = Left
+      GroupName = 'group1'
+      IsChecked = True
+      Size.Width = 81.000000000000000000
+      Size.Height = 81.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 40
+      TabStop = False
+      Text = 'Indy'
+    end
+    object rdbNetHttp: TRadioButton
+      Align = Left
+      GroupName = 'group1'
+      Position.X = 81.000000000000000000
+      Size.Width = 81.000000000000000000
+      Size.Height = 81.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 39
+      TabStop = False
+      Text = 'NetHttp'
+    end
+    object rdbRr4dIndy: TRadioButton
+      Align = Client
+      GroupName = 'group1'
+      Size.Width = 478.000000000000000000
+      Size.Height = 81.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 38
+      TabStop = False
+      Text = 'RR4D + Indy'
+    end
+  end
+  object Layout1: TLayout
+    Align = Top
+    Position.Y = 81.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 100.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    object btnGoodCert: TButton
+      Align = Top
+      Size.Width = 640.000000000000000000
+      Size.Height = 50.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      TabStop = False
+      Text = 'btnGoodCert'
+      OnClick = btnGoodCertClick
+    end
+    object btnSelfSignedCert: TButton
+      Align = Client
+      Size.Width = 640.000000000000000000
+      Size.Height = 50.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      TabStop = False
+      Text = 'btnSelfSignedCert'
+      OnClick = btnSelfSignedCertClick
+    end
+  end
+  object memResponse: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    ReadOnly = True
+    Align = Client
+    Size.Width = 640.000000000000000000
+    Size.Height = 299.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    TabStop = False
+    Viewport.Width = 636.000000000000000000
+    Viewport.Height = 295.000000000000000000
+  end
+end

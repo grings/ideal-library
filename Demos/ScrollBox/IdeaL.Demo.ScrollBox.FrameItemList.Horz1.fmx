@@ -1,0 +1,25 @@
+inherited FilHorz1: TFilHorz1
+  Size.Width = 100.000000000000000000
+  inherited lytBackground: TLayout
+    Size.Width = 100.000000000000000000
+    inherited rctBackground: TRectangle
+      Size.Width = 100.000000000000000000
+      inherited lneBottom: TLine
+        Size.Width = 90.000000000000000000
+      end
+    end
+    inherited rctClient: TRectangle
+      Size.Width = 90.000000000000000000
+      object Label1: TLabel
+        Align = Center
+        AutoSize = True
+        Size.Width = 32.000000000000000000
+        Size.Height = 16.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.WordWrap = False
+        Text = 'Horz1'
+        TabOrder = 0
+      end
+    end
+  end
+end

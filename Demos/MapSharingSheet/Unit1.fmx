@@ -1,0 +1,86 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object Edit1: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    Align = Top
+    TabOrder = 3
+    FilterChar = '0123456789.'
+    Size.Width = 640.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TextPrompt = 'Lat'
+    object ClearEditButton1: TClearEditButton
+      CanFocus = False
+      Cursor = crArrow
+      Size.Width = 28.000000000000000000
+      Size.Height = 18.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+    end
+  end
+  object Edit2: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    Align = Top
+    TabOrder = 2
+    FilterChar = '0123456789.'
+    Position.Y = 22.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TextPrompt = 'Long'
+    object ClearEditButton2: TClearEditButton
+      CanFocus = False
+      Cursor = crArrow
+      Size.Width = 28.000000000000000000
+      Size.Height = 18.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+    end
+  end
+  object Edit3: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    Align = Top
+    TabOrder = 1
+    Position.Y = 44.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TextPrompt = 'Address'
+  end
+  object Layout1: TLayout
+    Align = Center
+    Size.Width = 100.000000000000000000
+    Size.Height = 60.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    TabStop = False
+    object Button2: TButton
+      OnTap = Button2Tap
+      Align = Client
+      CanFocus = False
+      Size.Width = 100.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      TabStop = False
+      Text = 'Address'
+    end
+    object Button1: TButton
+      OnTap = Button1Tap
+      Align = Top
+      Size.Width = 100.000000000000000000
+      Size.Height = 30.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 3
+      Text = 'GEO'
+    end
+  end
+end

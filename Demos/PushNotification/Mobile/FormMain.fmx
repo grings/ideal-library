@@ -1,0 +1,134 @@
+object Form2: TForm2
+  Left = 0
+  Top = 0
+  Caption = 'Form2'
+  ClientHeight = 560
+  ClientWidth = 340
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object lytBackground: TLayout
+    Align = Contents
+    Size.Width = 340.000000000000000000
+    Size.Height = 560.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    OnPainting = lytBackgroundPainting
+    object Label1: TLabel
+      Align = Top
+      Margins.Left = 2.000000000000000000
+      Margins.Top = 2.000000000000000000
+      Margins.Right = 2.000000000000000000
+      Margins.Bottom = 2.000000000000000000
+      Position.X = 2.000000000000000000
+      Position.Y = 2.000000000000000000
+      Size.Width = 336.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Device Token (Tap on the value to copy it)'
+      TabOrder = 2
+      TabStop = False
+    end
+    object Label2: TLabel
+      Align = Top
+      Margins.Left = 2.000000000000000000
+      Margins.Top = 2.000000000000000000
+      Margins.Right = 2.000000000000000000
+      Margins.Bottom = 2.000000000000000000
+      Position.X = 2.000000000000000000
+      Position.Y = 43.000000000000000000
+      Size.Width = 336.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'DeviceId'
+      TabOrder = 3
+      TabStop = False
+    end
+    object Label3: TLabel
+      Align = Top
+      Margins.Left = 2.000000000000000000
+      Margins.Top = 2.000000000000000000
+      Margins.Right = 2.000000000000000000
+      Margins.Bottom = 2.000000000000000000
+      Position.X = 2.000000000000000000
+      Position.Y = 84.000000000000000000
+      Size.Width = 336.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Message'
+      TabOrder = 4
+      TabStop = False
+    end
+    object lblDeviceId: TLabel
+      OnTap = lblDeviceTokenTap
+      Align = Top
+      AutoSize = True
+      HitTest = True
+      Margins.Left = 2.000000000000000000
+      Margins.Top = 2.000000000000000000
+      Margins.Right = 2.000000000000000000
+      Margins.Bottom = 2.000000000000000000
+      Position.X = 2.000000000000000000
+      Position.Y = 64.000000000000000000
+      Size.Width = 336.000000000000000000
+      Size.Height = 16.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'lblDeviceId'
+      TabOrder = 0
+      TabStop = False
+      OnClick = lblDeviceTokenClick
+      object Line2: TLine
+        Align = Bottom
+        LineType = Bottom
+        Position.Y = 14.000000000000000000
+        Size.Width = 336.000000000000000000
+        Size.Height = 2.000000000000000000
+        Size.PlatformDefault = False
+      end
+    end
+    object lblDeviceToken: TLabel
+      OnTap = lblDeviceTokenTap
+      Align = Top
+      AutoSize = True
+      HitTest = True
+      Margins.Left = 2.000000000000000000
+      Margins.Top = 2.000000000000000000
+      Margins.Right = 2.000000000000000000
+      Margins.Bottom = 2.000000000000000000
+      Position.X = 2.000000000000000000
+      Position.Y = 23.000000000000000000
+      Size.Width = 336.000000000000000000
+      Size.Height = 16.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'lblDeviceToken'
+      TabOrder = 1
+      TabStop = False
+      OnClick = lblDeviceTokenClick
+      object Line1: TLine
+        Align = Bottom
+        LineType = Bottom
+        Position.Y = 14.000000000000000000
+        Size.Width = 336.000000000000000000
+        Size.Height = 2.000000000000000000
+        Size.PlatformDefault = False
+      end
+    end
+    object memoMessage: TMemo
+      Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+      DataDetectorTypes = []
+      Align = Client
+      Margins.Left = 2.000000000000000000
+      Margins.Top = 2.000000000000000000
+      Margins.Right = 2.000000000000000000
+      Margins.Bottom = 2.000000000000000000
+      Size.Width = 336.000000000000000000
+      Size.Height = 453.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 5
+      TabStop = False
+      Viewport.Width = 332.000000000000000000
+      Viewport.Height = 449.000000000000000000
+    end
+  end
+end

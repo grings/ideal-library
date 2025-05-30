@@ -1,0 +1,53 @@
+object FrameItemListBase: TFrameItemListBase
+  Size.Width = 366.000000000000000000
+  Size.Height = 90.000000000000000000
+  Size.PlatformDefault = False
+  TabStop = False
+  object rctBackground: TRectangle
+    Align = Contents
+    Fill.Color = claWhite
+    Size.Width = 366.000000000000000000
+    Size.Height = 90.000000000000000000
+    Size.PlatformDefault = False
+    Stroke.Kind = None
+  end
+  object lytBackgroud: TLayout
+    Align = Contents
+    Size.Width = 366.000000000000000000
+    Size.Height = 90.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    TabStop = False
+    object lytClient: TLayout
+      Align = Contents
+      Margins.Left = 5.000000000000000000
+      Margins.Top = 5.000000000000000000
+      Margins.Right = 5.000000000000000000
+      Margins.Bottom = 5.000000000000000000
+      Size.Width = 356.000000000000000000
+      Size.Height = 80.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      TabStop = False
+      object rctClient: TRectangle
+        Align = Contents
+        Fill.Color = claWhite
+        HitTest = False
+        Size.Width = 356.000000000000000000
+        Size.Height = 80.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Kind = None
+      end
+      object lneBottom: TLine
+        Align = Bottom
+        HitTest = False
+        LineType = Bottom
+        Position.Y = 75.000000000000000000
+        Size.Width = 356.000000000000000000
+        Size.Height = 5.000000000000000000
+        Size.PlatformDefault = False
+        Stroke.Color = xFFBFBFBF
+      end
+    end
+  end
+end

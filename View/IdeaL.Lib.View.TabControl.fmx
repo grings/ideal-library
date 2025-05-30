@@ -1,0 +1,59 @@
+object IdeaLTabControl: TIdeaLTabControl
+  Align = Client
+  ClipChildren = True
+  Size.Width = 560.000000000000000000
+  Size.Height = 632.000000000000000000
+  Size.PlatformDefault = False
+  TabStop = False
+  OnMouseDown = FrameMouseDown
+  OnMouseMove = FrameMouseMove
+  OnMouseUp = FrameMouseUp
+  OnMouseLeave = FrameMouseLeave
+  OnPainting = FramePainting
+  OnResize = FrameResize
+  object Viewport: TLayout
+    Position.Y = -4.000000000000000000
+    Size.Width = 560.000000000000000000
+    Size.Height = 540.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    TabStop = False
+    object FloatAnimation: TFloatAnimation
+      AnimationType = Out
+      Duration = 0.500000000000000000
+      Interpolation = Exponential
+      PropertyName = 'Position.X'
+      StartValue = 0.000000000000000000
+      StartFromCurrent = True
+      StopValue = 0.000000000000000000
+    end
+    object FloatAnimationView: TFloatAnimation
+      AnimationType = Out
+      Duration = 0.300000011920929000
+      Interpolation = Exponential
+      PropertyName = 'Position.Y'
+      StartValue = 1000.000000000000000000
+      StopValue = 0.000000000000000000
+    end
+  end
+  object lytBottom: TLayout
+    Align = Bottom
+    Margins.Bottom = 10.000000000000000000
+    Position.Y = 612.000000000000000000
+    Size.Width = 560.000000000000000000
+    Size.Height = 10.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+    TabStop = False
+    object lytBottomCenter: TLayout
+      Align = HorzCenter
+      Position.X = 239.000000000000000000
+      Size.Width = 82.000000000000000000
+      Size.Height = 10.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      TabStop = False
+      OnPainting = lytBottomCenterPainting
+    end
+  end
+end

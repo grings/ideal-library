@@ -1,0 +1,137 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 480
+  ClientWidth = 640
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnShow = FormShow
+  DesignerMasterStyle = 0
+  object Label1: TLabel
+    Align = Top
+    Size.Width = 640.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Currency'
+    TabOrder = 9
+    TabStop = False
+  end
+  object edtCurrency: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    OnTap = edtCurrencyTap
+    Align = Top
+    TabOrder = 0
+    KeyboardType = NumberPad
+    ReturnKeyType = Next
+    Position.Y = 17.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    OnChangeTracking = edtCurrencyChangeTracking
+    OnKeyDown = edtCurrencyKeyDown
+    OnPainting = edtCurrencyPainting
+  end
+  object Label2: TLabel
+    Align = Top
+    Position.Y = 39.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Date'
+    TabOrder = 8
+    TabStop = False
+  end
+  object edtDate: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    OnTap = edtCurrencyTap
+    Align = Top
+    TabOrder = 1
+    KeyboardType = NumberPad
+    ReturnKeyType = Next
+    Position.Y = 56.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    OnChangeTracking = edtCurrencyChangeTracking
+    OnKeyDown = edtCurrencyKeyDown
+    OnPainting = edtCurrencyPainting
+  end
+  object edtCep: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    OnTap = edtCurrencyTap
+    Align = Top
+    TabOrder = 2
+    KeyboardType = NumberPad
+    ReturnKeyType = Next
+    Position.Y = 95.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    OnChangeTracking = edtCurrencyChangeTracking
+    OnKeyDown = edtCurrencyKeyDown
+    OnPainting = edtCurrencyPainting
+  end
+  object Label3: TLabel
+    Align = Top
+    Position.Y = 78.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'CEP'
+    TabOrder = 7
+    TabStop = False
+  end
+  object edtCpfCnpj: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    OnTap = edtCurrencyTap
+    Align = Top
+    TabOrder = 3
+    KeyboardType = NumberPad
+    ReturnKeyType = Next
+    Position.Y = 134.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    OnChangeTracking = edtCurrencyChangeTracking
+    OnKeyDown = edtCurrencyKeyDown
+    OnPainting = edtCurrencyPainting
+  end
+  object Label4: TLabel
+    Align = Top
+    Position.Y = 117.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'CPF/CNPJ'
+    TabOrder = 6
+    TabStop = False
+  end
+  object edtPhoneNumber: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    OnTap = edtCurrencyTap
+    Align = Top
+    TabOrder = 4
+    KeyboardType = NumberPad
+    ReturnKeyType = Next
+    Position.Y = 173.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    OnChangeTracking = edtCurrencyChangeTracking
+    OnKeyDown = edtCurrencyKeyDown
+    OnPainting = edtCurrencyPainting
+  end
+  object Label5: TLabel
+    Align = Top
+    Position.Y = 156.000000000000000000
+    Size.Width = 640.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Phone Number'
+    TabOrder = 5
+    TabStop = False
+  end
+end

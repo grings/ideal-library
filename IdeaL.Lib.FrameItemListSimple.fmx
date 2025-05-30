@@ -1,0 +1,28 @@
+inherited FrameItemListSimple: TFrameItemListSimple
+  Size.Height = 35.000000000000000000
+  inherited lytBackground: TLayout
+    Size.Height = 35.000000000000000000
+    inherited rctBackground: TRectangle
+      Size.Height = 35.000000000000000000
+      inherited lneBottom: TLine
+        Position.Y = 29.000000000000000000
+      end
+    end
+    inherited rctClient: TRectangle
+      Size.Height = 25.000000000000000000
+      object lblDetail: TLabel
+        Align = Client
+        AutoSize = True
+        StyledSettings = [Family, Style, FontColor]
+        Size.Width = 390.000000000000000000
+        Size.Height = 25.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Size = 16.000000000000000000
+        TextSettings.WordWrap = False
+        Text = 'lblDetail'
+        TabOrder = 1
+        TabStop = False
+      end
+    end
+  end
+end

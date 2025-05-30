@@ -1,0 +1,24 @@
+object FrameListModel: TFrameListModel
+  Size.Width = 320.000000000000000000
+  Size.Height = 540.000000000000000000
+  Size.PlatformDefault = False
+  TabStop = False
+  object lytBackground: TLayout
+    Align = Client
+    Size.Width = 320.000000000000000000
+    Size.Height = 540.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    TabStop = False
+    object vtsList: TScrollBox
+      Align = Contents
+      Size.Width = 320.000000000000000000
+      Size.Height = 540.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      TabStop = False
+      Viewport.Width = 320.000000000000000000
+      Viewport.Height = 540.000000000000000000
+    end
+  end
+end

@@ -1,0 +1,357 @@
+object FormMain: TFormMain
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 560
+  ClientWidth = 340
+  Position = ScreenCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  DesignerMasterStyle = 0
+  object lytMediaPlayerOptions: TLayout
+    Align = Bottom
+    Margins.Bottom = 5.000000000000000000
+    Position.Y = 426.000000000000000000
+    Size.Width = 340.000000000000000000
+    Size.Height = 129.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    TabStop = False
+    object lytBottom: TLayout
+      Align = Bottom
+      Position.Y = 79.000000000000000000
+      Size.Width = 340.000000000000000000
+      Size.Height = 50.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 0
+      TabStop = False
+      object lytBottomBackground: TLayout
+        Align = Contents
+        Size.Width = 340.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        TabStop = False
+      end
+      object lytButtons: TLayout
+        Align = HorzCenter
+        Position.X = 37.000000000000000000
+        Size.Width = 265.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        TabStop = False
+        object btnPlay: TButton
+          Align = Left
+          CanFocus = False
+          Margins.Left = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Position.X = 81.000000000000000000
+          Size.Width = 50.000000000000000000
+          Size.Height = 50.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'btnTransparente'
+          TabOrder = 4
+          TabStop = False
+          OnClick = btnPlayClick
+          object pthPlay: TPath
+            Align = Client
+            Data.Path = {
+              0400000000000000000080410000204101000000000080410000184201000000
+              000018420000C041030000000000804100002041}
+            Fill.Color = claBlack
+            Locked = True
+            HitTest = False
+            Margins.Left = 17.000000000000000000
+            Margins.Top = 15.000000000000000000
+            Margins.Right = 17.000000000000000000
+            Margins.Bottom = 15.000000000000000000
+            Size.Width = 16.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+            Stroke.Kind = None
+          end
+        end
+        object btnStop: TButton
+          Align = Left
+          CanFocus = False
+          Margins.Left = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Position.X = 135.000000000000000000
+          Size.Width = 50.000000000000000000
+          Size.Height = 50.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'btnTransparente'
+          TabOrder = 1
+          TabStop = False
+          OnClick = btnPlayClick
+          object pthStop: TPath
+            Align = Client
+            Data.Path = {
+              0500000000000000000040410000404101000000000010420000404101000000
+              0000104200001042010000000000404100001042030000000000404100004041}
+            Fill.Color = claBlack
+            Locked = True
+            HitTest = False
+            Margins.Left = 15.000000000000000000
+            Margins.Top = 15.000000000000000000
+            Margins.Right = 15.000000000000000000
+            Margins.Bottom = 15.000000000000000000
+            Size.Width = 20.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+            Stroke.Kind = None
+          end
+        end
+        object btnNext: TButton
+          Align = Left
+          CanFocus = False
+          Margins.Left = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Position.X = 189.000000000000000000
+          Size.Width = 50.000000000000000000
+          Size.Height = 50.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'btnTransparente'
+          TabOrder = 3
+          TabStop = False
+          OnClick = btnPlayClick
+          object pthNext: TPath
+            Align = Client
+            Data.Path = {
+              0900000000000000000080410000904101000000000090410000904101000000
+              000090410000C04001000000000080410000C040000000000000C04000009041
+              010000000000684100004041010000000000C0400000C040010000000000C040
+              00009041030000000000C04000009041}
+            Fill.Color = claBlack
+            Locked = True
+            HitTest = False
+            Margins.Left = 17.000000000000000000
+            Margins.Top = 15.000000000000000000
+            Margins.Right = 17.000000000000000000
+            Margins.Bottom = 15.000000000000000000
+            Size.Width = 16.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+            Stroke.Kind = None
+          end
+        end
+        object btnPrevious: TButton
+          Align = Left
+          CanFocus = False
+          Margins.Left = 2.000000000000000000
+          Margins.Right = 2.000000000000000000
+          Position.X = 27.000000000000000000
+          Size.Width = 50.000000000000000000
+          Size.Height = 50.000000000000000000
+          Size.PlatformDefault = False
+          StyleLookup = 'btnTransparente'
+          TabOrder = 2
+          TabStop = False
+          OnClick = btnPlayClick
+          object pthPrevious: TPath
+            Align = Client
+            Data.Path = {
+              0A000000000000000000C04000009041010000000000C0400000C04001000000
+              000000410000C040010000000000004100009041010000000000C04000009041
+              00000000000018410000404101000000000090410000C0400100000000009041
+              00009041010000000000184100004041030000000000184100004041}
+            Fill.Color = claBlack
+            Locked = True
+            HitTest = False
+            Margins.Left = 17.000000000000000000
+            Margins.Top = 15.000000000000000000
+            Margins.Right = 17.000000000000000000
+            Margins.Bottom = 15.000000000000000000
+            Size.Width = 16.000000000000000000
+            Size.Height = 20.000000000000000000
+            Size.PlatformDefault = False
+            Stroke.Kind = None
+          end
+        end
+        object lytButtonSecondsPlus: TLayout
+          Align = Left
+          Position.X = 241.000000000000000000
+          Size.Width = 25.000000000000000000
+          Size.Height = 50.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 6
+          TabStop = False
+          object btnButtonSecondsPlus: TButton
+            Align = Bottom
+            CanFocus = False
+            Margins.Left = 2.000000000000000000
+            Margins.Right = 2.000000000000000000
+            Position.X = 2.000000000000000000
+            Position.Y = 25.000000000000000000
+            Size.Width = 21.000000000000000000
+            Size.Height = 25.000000000000000000
+            Size.PlatformDefault = False
+            StyleLookup = 'btnTransparentList'
+            TabOrder = 0
+            TabStop = False
+            OnClick = btnButtonSecondsLessClick
+            object Path1: TPath
+              Align = Center
+              Data.Path = {
+                0E00000000000000000098410000504101000000000050410000504101000000
+                0000504100009841010000000000304100009841010000000000304100005041
+                010000000000A04000005041010000000000A040000030410100000000003041
+                0000304101000000000030410000A04001000000000050410000A04001000000
+                0000504100003041010000000000984100003041010000000000984100005041
+                030000000000984100005041}
+              Fill.Color = claBlack
+              Locked = True
+              HitTest = False
+              Size.Width = 12.000000000000000000
+              Size.Height = 12.000000000000000000
+              Size.PlatformDefault = False
+              Stroke.Kind = None
+            end
+          end
+        end
+        object lytButtonSecondsLess: TLayout
+          Align = Left
+          Size.Width = 25.000000000000000000
+          Size.Height = 50.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 5
+          TabStop = False
+          object btnButtonSecondsLess: TButton
+            Align = Bottom
+            CanFocus = False
+            Margins.Left = 2.000000000000000000
+            Margins.Right = 2.000000000000000000
+            Position.X = 2.000000000000000000
+            Position.Y = 25.000000000000000000
+            Size.Width = 21.000000000000000000
+            Size.Height = 25.000000000000000000
+            Size.PlatformDefault = False
+            StyleLookup = 'btnTransparentList'
+            TabOrder = 0
+            TabStop = False
+            OnClick = btnButtonSecondsLessClick
+            object Path2: TPath
+              Align = Center
+              Data.Path = {
+                06000000000000000000984100005041010000000000A0400000504101000000
+                0000A04000003041010000000000984100003041010000000000984100005041
+                030000000000984100005041}
+              Fill.Color = claBlack
+              Locked = True
+              HitTest = False
+              Size.Width = 12.000000000000000000
+              Size.Height = 3.000000000000000000
+              Size.PlatformDefault = False
+              Stroke.Kind = None
+            end
+          end
+        end
+      end
+    end
+    object lytAudioInfo: TLayout
+      Align = Client
+      Size.Width = 340.000000000000000000
+      Size.Height = 49.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 1
+      TabStop = False
+      object lytPthAudioInfo: TLayout
+        Align = Left
+        Size.Width = 50.000000000000000000
+        Size.Height = 49.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        TabStop = False
+        object pthAudioInfo: TPath
+          Align = Client
+          Data.Path = {
+            28000000000000000000B04100000842010000000000D0410000084201000000
+            0000D0410000B041010000000000B0410000B041010000000000B04100000842
+            030000000000B04100000842000000000000C041000080400200000033334F41
+            00008040020000000000804033334F4102000000000080400000C04102000000
+            0000804033330C420200000033334F4100003042020000000000C04100003042
+            0200000033330C4200003042020000000000304233330C420200000000003042
+            0000C041020000000000304234334F410200000033330C420000804002000000
+            0000C04100008040030000000000C04100008040000000000000C04100002042
+            0200000048E17241000020420200000000000041AE4703420200000000000041
+            0000C041020000000000004148E172410200000048E172410000004102000000
+            0000C0410000004102000000AE47034200000041020000000000204248E17241
+            02000000000020420000C0410200000000002042AE47034202000000AE470342
+            00002042020000000000C04100002042030000000000C0410000204200000000
+            0000B04100009041010000000000D04100009041010000000000D04100006041
+            010000000000B04100006041010000000000B04100009041030000000000B041
+            00009041}
+          Fill.Color = claBlack
+          Margins.Left = 10.000000000000000000
+          Margins.Top = 10.000000000000000000
+          Margins.Right = 10.000000000000000000
+          Margins.Bottom = 10.000000000000000000
+          Size.Width = 30.000000000000000000
+          Size.Height = 29.000000000000000000
+          Size.PlatformDefault = False
+          Stroke.Kind = None
+        end
+      end
+      object lblAudioInfoDescription: TLabel
+        Align = Client
+        StyledSettings = [Size, Style, FontColor]
+        Size.Width = 290.000000000000000000
+        Size.Height = 49.000000000000000000
+        Size.PlatformDefault = False
+        TextSettings.Font.Family = 'Verdana'
+        TabOrder = 1
+        TabStop = False
+      end
+    end
+    object lytProgress: TLayout
+      Align = Bottom
+      Margins.Top = 5.000000000000000000
+      Margins.Bottom = 5.000000000000000000
+      Position.Y = 54.000000000000000000
+      Size.Width = 340.000000000000000000
+      Size.Height = 20.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 2
+      TabStop = False
+      object trkProgress: TTrackBar
+        Align = Contents
+        CanParentFocus = True
+        Orientation = Horizontal
+        Margins.Left = 10.000000000000000000
+        Margins.Right = 10.000000000000000000
+        Size.Width = 320.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        StyleLookup = 'trkProgressStyle1'
+        TabOrder = 0
+        TabStop = False
+        OnChange = trkProgressChange
+        object lblPlayCurrentTime: TLabel
+          Align = HorzCenter
+          AutoSize = True
+          StyledSettings = [Size, Style, FontColor]
+          Position.X = 142.000000000000000000
+          Size.Width = 36.000000000000000000
+          Size.Height = 19.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.Font.Family = 'Verdana'
+          TextSettings.HorzAlign = Center
+          TextSettings.WordWrap = False
+          Text = '00:00'
+          TabOrder = 1
+          TabStop = False
+        end
+      end
+    end
+  end
+  object MediaPlayerControl1: TMediaPlayerControl
+    Size.Width = 340.000000000000000000
+    Size.Height = 426.000000000000000000
+    Size.PlatformDefault = False
+    Align = Client
+  end
+end

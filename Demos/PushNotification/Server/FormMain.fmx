@@ -1,0 +1,59 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 497
+  ClientWidth = 614
+  Position = DesktopCenter
+  WindowState = wsMaximized
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnShow = FormShow
+  DesignerMasterStyle = 0
+  object tbcMain: TTabControl
+    Align = Contents
+    Size.Width = 614.000000000000000000
+    Size.Height = 497.000000000000000000
+    Size.PlatformDefault = False
+    TabIndex = 0
+    TabOrder = 1
+    TabStop = False
+    TabPosition = PlatformDefault
+    Sizes = (
+      614s
+      471s
+      614s
+      471s)
+    object tbiV1: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = True
+      Size.Width = 34.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      TabStop = False
+      Text = 'V1'
+      ExplicitSize.cx = 34.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+    end
+    object tbiLegacy: TTabItem
+      CustomIcon = <
+        item
+        end>
+      IsSelected = False
+      Size.Width = 57.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      TabStop = False
+      Text = 'Legacy'
+      ExplicitSize.cx = 57.000000000000000000
+      ExplicitSize.cy = 26.000000000000000000
+    end
+  end
+end
