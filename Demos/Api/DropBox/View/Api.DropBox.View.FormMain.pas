@@ -10,29 +10,38 @@ uses
   // Necessary uses
   System.Math, // to be used on DownloadUploadStatusUpdate  and validate the division by zero
   System.Net.HttpClient, // To create the CallBack procedure DownloadUploadRequestCompletedEvent
-  System.Permissions, FMX.Memo.Types, FMX.ScrollBox, FMX.Memo //
+  System.Permissions, FMX.Memo.Types, FMX.ScrollBox, FMX.Memo, FMX.Edit //
     ;
 
 type
   TFormMain = class(TForm)
-    btnUpload: TButton;
-    btnDownload: TButton;
-    ProgressBar1: TProgressBar;
-    btnDelete: TButton;
-    btnListFolder: TButton;
+    TabControl1: TTabControl;
+    TabItem1: TTabItem;
+    TabItem2: TTabItem;
     btnCreateFolder: TButton;
-    Memo1: TMemo;
-    AniIndicator1: TAniIndicator;
+    btnDelete: TButton;
+    btnDownload: TButton;
     btnDownloadRange: TButton;
+    btnListFolder: TButton;
+    btnUpload: TButton;
+    Memo1: TMemo;
+    btnV2ListFolder: TButton;
+    memoResult: TMemo;
+    btnV2Download: TButton;
+    ProgressBar1: TProgressBar;
+    AniIndicator1: TAniIndicator;
+    Label1: TLabel;
+    edtAccessToken: TEdit;
+    Label2: TLabel;
+    edtFolderPath: TEdit;
+    Label3: TLabel;
+    edtFileName: TEdit;
     procedure btnUploadClick(Sender: TObject);
     procedure btnDownloadClick(Sender: TObject);
+    procedure btnV2ListFolderClick(Sender: TObject);
+    procedure edtAccessTokenTyping(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
-  // Your private DropBox Developer AccessToken
-    const
-    CAccessToken = '';
-    CRemotePath = '';
-    CPngFileName = '';
-
   var
     FUpdationProgressbar: Boolean;
     FSenderTapped: TObject;
@@ -58,8 +67,10 @@ type
 
     procedure ProgressBarInitialize;
 
-    procedure Download;
-    procedure DownloadRange;
+    procedure Download(Sender: TObject);
+
+    procedure ConfigLoad;
+    procedure ConfigSave;
     { Private declarations }
   public
     { Public declarations }
@@ -74,6 +85,7 @@ uses
   IdeaL.Lib.Api.DropBox,
   IdeaL.Lib.Utils,
 
+  System.JSON,
   System.IOUtils,
 
   {
@@ -119,11 +131,11 @@ begin
   FSenderTapped := Sender;
   ProgressBarInitialize;
   LPathLocal := GetLocalFilePath;
-  LPathLocal := TUtils.Combine(LPathLocal, [CPngFileName]);
-  LPathRemote := '/' + CPngFileName.Trim(['/', '\']);
+  LPathLocal := TUtils.Combine(LPathLocal, [edtFileName.Text]);
+  LPathRemote := '/' + edtFileName.Text.Trim(['/', '\']);
   LDb := TDropBoxApi.Create;
   try
-    LDb.AccessToken := CAccessToken;
+    LDb.AccessToken := edtAccessToken.Text;
 
     if Sender = btnUpload then
     begin
@@ -168,6 +180,77 @@ begin
   end;
 end;
 
+procedure TFormMain.btnV2ListFolderClick(Sender: TObject);
+begin
+  var
+  LDv2 := TDropBoxApiV2.Create;
+  try
+    var
+    LJson := LDv2.
+      SetAccessToken(edtAccessToken.Text).
+      ListFiles(edtFolderPath.Text);
+    var
+    JsonValue := TJSONObject.ParseJSONValue(LJson) as TJSONObject;
+    if Assigned(JsonValue) then
+    try
+      memoResult.Lines.Text := JsonValue.Format(4);
+    finally
+      JsonValue.Free;
+    end
+
+  finally
+    LDv2.Free;
+  end;
+end;
+
+procedure TFormMain.ConfigLoad;
+begin
+  if not FileExists('config.json') then
+    Exit;
+  var
+  LStrLst := TStringList.Create;
+  try
+    var
+    LStrValue := EmptyStr;
+    LStrLst.LoadFromFile('config.json');
+    var
+    LJsonValue := TJSONObject.ParseJSONValue(LStrLst.Text);
+    try
+      if LJsonValue.TryGetValue<string>('AccessToken', LStrValue) then
+        edtAccessToken.Text := LStrValue;
+      if LJsonValue.TryGetValue<string>('FlderPath', LStrValue) then
+        edtFolderPath.Text := LStrValue;
+      if LJsonValue.TryGetValue<string>('FileName', LStrValue) then
+        edtFileName.Text := LStrValue;
+    finally
+      LJsonValue.Free;
+    end
+  finally
+    LStrLst.Free;
+  end;
+end;
+
+procedure TFormMain.ConfigSave;
+begin
+  var
+  LStrLst := TStringList.Create;
+  try
+    var
+    LJsonValue := TJSONObject.ParseJSONValue('{}') as TJSONObject;
+    try
+      LJsonValue.AddPair('AccessToken', edtAccessToken.Text );
+      LJsonValue.AddPair('FlderPath', edtFolderPath.Text );
+      LJsonValue.AddPair('FileName', edtFileName.Text );
+      LStrLst.Text := LJsonValue.ToString;
+    finally
+      LJsonValue.Free;
+    end;
+    LStrLst.SaveToFile('config.json');
+  finally
+    LStrLst.Free;
+  end;
+end;
+
 procedure TFormMain.DisplayRationale(Sender: TObject;
   const APermissions: TArray<string>; const APostRationaleProc: TProc);
 begin
@@ -197,18 +280,15 @@ procedure TFormMain.GrantedPermissionRequestResult(Sender: TObject;
 const APermissions: TClassicStringDynArray;
 const AGrantResults: TClassicPermissionStatusDynArray);
 begin
-  if FSenderTapped = btnDownload then
-    Download
-  else if FSenderTapped = btnDownloadRange then
-    DownloadRange;
+  Download(FSenderTapped);
 end;
 {$IFEND}
 
-procedure TFormMain.Download;
+procedure TFormMain.Download(Sender: TObject);
 begin
   // Thread is not exactly necessary
   ProgressBarInitialize;
-  btnDownload.Enabled := False;
+  TControl(Sender).Enabled := False;
   LoadingShow;
   TThread.CreateAnonymousThread(
     procedure
@@ -218,69 +298,63 @@ begin
       LDb: TDropBoxApi;
     begin
       LPathLocal := GetLocalFilePath;
-      LPathLocal := TUtils.Combine(LPathLocal, [CPngFileName]);
+      LPathLocal := TUtils.Combine(LPathLocal, [edtFileName.Text]);
 
       if FileExists(LPathLocal) then
         DeleteFile(LPathLocal);
 
-      LPathRemote := '/' + CPngFileName.Trim(['/', '\']);
-      LDb := TDropBoxApi.Create;
+      LPathRemote := edtFolderPath.Text + edtFileName.Text;
       try
-        try
-          LDb.AccessToken := CAccessToken;
+        try  if Trim(TControl(Sender).Name).Contains('V2') then
+          begin
+            var
+            LDb2 := TDropBoxApiV2.Create;
+            try
+              LDb2.
+                SetAccessToken(edtAccessToken.Text).
+                SetOnDownloadStatusUpdate(DownloadUploadStatusUpdate).
+                SetOnRequestCompletedEvent(DownloadUploadRequestCompletedEvent).
+                Download(LPathLocal, LPathRemote);
+            finally
+              LDb2.Free;
+            end;
+          end
+          else
+          begin
+            LDb := TDropBoxApi.Create;
+            try
+              try
+                LDb.AccessToken := edtAccessToken.Text;
 
-          // This will work just with Thread
-          LDb.OnDownloadStatusUpdate := DownloadUploadStatusUpdate;
-          LDb.OnRequestCompletedEvent := DownloadUploadRequestCompletedEvent;
-          LDb.Download(LPathLocal, LPathRemote);
+                // This will work just with Thread
+                LDb.OnDownloadStatusUpdate := DownloadUploadStatusUpdate;
+                LDb.OnRequestCompletedEvent := DownloadUploadRequestCompletedEvent;
+                if Sender = btnDownloadRange then
+                  LDb.DownloadRange(LPathLocal, LPathRemote)
+                else
+                  LDb.Download(LPathLocal, LPathRemote);
+              except
+                on E: Exception do
+                  ThreadShowMessage(E.Message);
+              end;
+            finally
+              FreeAndNil(LDb);
+            end;
+          end;
         except
-          on E: Exception do
-            ThreadShowMessage(E.Message);
+          on E:Exception do
+          begin
+            var
+            LErrorMsg := E.Message;
+            TThread.ForceQueue(nil,
+              procedure
+              begin
+                ShowMessage(LErrorMsg);
+              end)
+          end;
         end;
       finally
-        FreeAndNil(LDb);
-        ThreadEnableButton(btnDownload);
-        LoadingHide;
-      end;
-    end).Start;
-end;
-
-procedure TFormMain.DownloadRange;
-begin
-  // Thread is not exactly necessary
-  ProgressBarInitialize;
-  btnDownload.Enabled := False;
-  LoadingShow;
-  TThread.CreateAnonymousThread(
-    procedure
-    var
-      LPathLocal: string;
-      LPathRemote: string;
-      LDb: TDropBoxApi;
-    begin
-      LPathLocal := GetLocalFilePath;
-      LPathLocal := TUtils.Combine(LPathLocal, [CPngFileName]);
-
-      if FileExists(LPathLocal) then
-        DeleteFile(LPathLocal);
-
-      LPathRemote := '/' + (CRemotePath.Trim(['/', '\']) + '/' + CPngFileName).Trim(['/', '\']);
-      LDb := TDropBoxApi.Create;
-      try
-        try
-          LDb.AccessToken := CAccessToken;
-
-          // This will work just with Thread
-          LDb.OnDownloadStatusUpdate := DownloadUploadStatusUpdate;
-          LDb.OnRequestCompletedEvent := DownloadUploadRequestCompletedEvent;
-          LDb.DownloadRange(LPathLocal, LPathRemote);
-        except
-          on E: Exception do
-            ThreadShowMessage(E.Message);
-        end;
-      finally
-        FreeAndNil(LDb);
-        ThreadEnableButton(btnDownload);
+        ThreadEnableButton(Sender as TButton);
         LoadingHide;
       end;
     end).Start;
@@ -311,7 +385,7 @@ begin
     FUpdationProgressbar := True;
     try
       // Synchronize is necessary just if you are using Threads
-      TThread.Synchronize(nil,
+      TThread.ForceQueue(nil,
         procedure
         begin
           {
@@ -323,6 +397,17 @@ begin
       FUpdationProgressbar := False;
     end;
   end;
+end;
+
+procedure TFormMain.edtAccessTokenTyping(Sender: TObject);
+begin
+  ConfigSave;
+end;
+
+procedure TFormMain.FormShow(Sender: TObject);
+begin
+  ConfigLoad;
+  LoadingHide;
 end;
 
 function TFormMain.GetLocalFilePath: string;

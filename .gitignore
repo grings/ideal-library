@@ -87,6 +87,9 @@ __history/
 __recovery/
 *.~*
 
+Demos/Api/DropBox/Rad12_3/Win64/Debug/
+Demos/SslMobile/Win64/Debug/
+
 # Castalia statistics file (since XE7 Castalia is distributed with Delphi)
 *.stat
 
@@ -98,5 +101,4 @@ modules/
 Demos/PushNotification/Mobile/11/Mobile11.res
 Demos/SelfUpdate/D11/AndroidManifest.template.xml
 Demos/TabControl/D11/AndroidManifest.template.xml
-Demos/SslMobile/Win64/Debug/libeay32.dll
-Demos/SslMobile/Win64/Debug/ssleay32.dll
+

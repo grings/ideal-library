@@ -31,6 +31,23 @@ const
 type
   TDownloadStatusUpdate = reference to procedure(const ALength, ACount: Int64);
 
+  TDropBoxApiNetHttp = class
+  private
+    FNetHttpRequest: TNetHTTPRequest;
+    FNetHttpClient: TNetHTTPClient;
+    { private declarations }
+  protected
+    { protected declarations }
+  public
+    destructor Destroy; override;
+
+    class function GetInstance(const AContentType: string = ''; const AMethodString: string = ''): TDropBoxApiNetHttp;
+
+    property NetHttpRequest: TNetHTTPRequest read FNetHttpRequest;
+    property NetHttpClient: TNetHTTPClient read FNetHttpClient;
+    { public declarations }
+  end;
+
   TDropBoxApi = class
   private
     FNetHttpRequest: TNetHTTPRequest;
@@ -113,9 +130,60 @@ type
     { public declarations }
   end;
 
+  TDropBoxApiV2 = class
+  private
+    const
+    DROPBOX_API_URL = 'https://api.dropboxapi.com/2/';
+    DROPBOX_CONTENT_URL = 'https://content.dropboxapi.com/2/';
+    DROPBOX_TOKEN_URL = 'https://api.dropboxapi.com/oauth2/token';
+    CContentTypeJson = 'application/json';
+    var
+    FAccessToken: string;
+    FOnDownloadStatusUpdate: TDownloadStatusUpdate;
+    FOnRequestCompletedEvent: TRequestCompletedEvent;
+    FContentLength: Int64; // For DownloadRange
+    FReadCount: Int64; // For DownloadRange
+    { private declarations }
+  protected
+    function ExecutePostRequest(
+      const AUrl: string;
+      const AParams: TStrings;
+      const AContentType: string;
+      AHeaders: TNetHeaders): string; overload;
+    function ExecutePostRequest(
+      const AUrl: string;
+      const AParams: TStrings;
+      const AContentType: string;
+      AHeaders: TNetHeaders;
+      out ARespStream: TStream): string; overload;
+
+    // http events
+    procedure NetHttpReceiveDataEvent(const Sender: TObject; AContentLength: Int64; AReadCount: Int64; var Abort: Boolean);
+    procedure NetHttpRequestCompletedEvent(const Sender: TObject; const AResponse: IHTTPResponse);
+    { protected declarations }
+  public
+    constructor Create;
+
+    function SetAccessToken(AValue: string): TDropBoxApiV2;
+    function SetOnDownloadStatusUpdate(AValue: TDownloadStatusUpdate): TDropBoxApiV2;
+    function SetOnRequestCompletedEvent(AValue: TRequestCompletedEvent): TDropBoxApiV2;
+
+    procedure Download(
+      const ALocalFileFullName: string;
+      const AServerFileFullName: string);
+
+    function ListFiles(const APath: string): string;
+
+    property ContentLength: Int64 read FContentLength;
+    property ReadCount: Int64 read FReadCount;
+    { public declarations }
+  end;
+
 implementation
 
 uses
+  REST.Types,
+  System.NetEncoding,
   System.JSON;
 
 { TDropBox }
@@ -542,6 +610,220 @@ begin
   If (AResponse.StatusCode < 200) or (AResponse.StatusCode > 299) Then
     raise Exception.Create(
       'Error: ' + AResponse.StatusCode.ToString + ' ' + AResponse.StatusText);
+end;
+
+{ TDropBoxApiV2 }
+
+constructor TDropBoxApiV2.Create;
+begin
+  FOnDownloadStatusUpdate := nil;
+  FOnRequestCompletedEvent := nil;
+  FContentLength := 0;
+  FReadCount := 0;
+end;
+
+procedure TDropBoxApiV2.Download(const ALocalFileFullName,
+  AServerFileFullName: string);
+begin
+  var
+  LJObj := TJSONObject.Create;
+  var
+  LJson := EmptyStr;
+  try
+    LJObj.AddPair('path', AServerFileFullName);
+    LJson := LJObj.ToString;
+  finally
+    LJObj.Free;
+  end;
+  var
+  LHeaders : TNetHeaders := [TNetHeader.Create('Dropbox-API-Arg', LJson)];
+  var
+  LStrm : TStream := TMemoryStream.Create;
+  try
+    ExecutePostRequest(DROPBOX_CONTENT_URL + 'files/download', nil, EmptyStr, LHeaders, LStrm);
+    LStrm.Position := 0;
+    TThread.Synchronize(nil,
+      procedure()
+      begin
+        TMemoryStream(LStrm).SaveToFile(ALocalFileFullName);
+
+        if not FileExists(ALocalFileFullName) then
+         raise Exception.Create(
+          'TDropBoxApi.Download couldn''t save the file : ' + ALocalFileFullName + sLineBreak +
+          'Check if you have the right permissions'
+          );
+      end);
+  finally
+    FreeAndNil(LStrm);
+  end;
+end;
+
+function TDropBoxApiV2.ExecutePostRequest(const AUrl: string;
+  const AParams: TStrings; const AContentType: string;
+  AHeaders: TNetHeaders): string;
+begin
+  var
+  LStrm : TStream := nil;
+  try
+    ExecutePostRequest(AUrl, AParams, AContentType, AHeaders, LStrm);
+  finally
+    FreeAndNil(LStrm);
+  end;
+end;
+
+function TDropBoxApiV2.ExecutePostRequest(const AUrl: string;
+  const AParams: TStrings; const AContentType: string;
+  AHeaders: TNetHeaders; out ARespStream: TStream): string;
+begin
+  if FAccessToken.Trim.IsEmpty then
+    raise Exception.Create('Access token can not be empty');
+
+  var
+  LReq := TDropBoxApiNetHttp.GetInstance(AContentType, 'POST');
+  try
+    LReq.NetHttpRequest.CustHeaders.Add('Authorization', 'Bearer ' + FAccessToken);
+    LReq.NetHttpRequest.OnReceiveData := NetHttpReceiveDataEvent;
+    LReq.NetHttpRequest.OnSendData := NetHttpReceiveDataEvent;
+    LReq.NetHttpRequest.OnRequestCompleted := NetHttpRequestCompletedEvent;
+    if Length(AHeaders) > 0 then
+    begin
+      for var i := Low(AHeaders) to High(AHeaders) do
+        LReq.NetHttpRequest.CustHeaders.Add(AHeaders[i].Name, AHeaders[i].Value);
+    end;
+
+    var
+    LReqStream : TStringStream := nil;
+    if (Assigned(AParams)) and (not AParams.Text.Trim.IsEmpty) then
+      LReqStream := TStringStream.Create(AParams.Text.Trim);
+    var
+    LResponseStream := TStringStream.Create;
+    try
+      var
+      LResponse :=
+          LReq.NetHttpRequest.Post(
+          AUrl,
+          LReqStream,
+          ARespStream
+          );
+      if IsTextualContentType(LResponse.HeaderValue['Content-Type']) then
+        Result := LResponse.ContentAsString();
+    finally
+      LReqStream.Free;
+      LResponseStream.Free;
+    end;
+  finally
+    LReq.Free;
+  end;
+end;
+
+function TDropBoxApiV2.ListFiles(const APath: string): string;
+var
+  LParams: TStrings;
+  LJson: TJSONObject;
+begin
+  LParams := TStringList.Create;
+  try
+    LJson := TJSONObject.Create;
+    try
+      LJson.AddPair('include_deleted', False);
+      LJson.AddPair('include_has_explicit_shared_members', False);
+      LJson.AddPair('include_media_info', False);
+      LJson.AddPair('include_mounted_folders', True);
+      LJson.AddPair('path', APath);
+      LJson.AddPair('recursive', False);
+      LParams.Add(LJson.ToString);
+    finally
+      LJson.Free;
+    end;
+    Result := ExecutePostRequest(DROPBOX_API_URL + 'files/list_folder', LParams, CContentTypeJson, []);
+  finally
+    LParams.Free;
+  end;
+end;
+
+procedure TDropBoxApiV2.NetHttpReceiveDataEvent(const Sender: TObject;
+  AContentLength, AReadCount: Int64; var Abort: Boolean);
+var
+  LContentLength: Int64;
+  LReadCount: Int64;
+begin
+  if ContentLength > 0 then
+  begin
+    LContentLength := ContentLength;
+    LReadCount := ReadCount + AReadCount;
+  end
+  else
+  begin
+    LContentLength := AContentLength;
+    LReadCount := AReadCount;
+  end;
+
+  if (Assigned(FOnDownloadStatusUpdate)) then
+    FOnDownloadStatusUpdate(LContentLength, LReadCount);
+end;
+
+procedure TDropBoxApiV2.NetHttpRequestCompletedEvent(const Sender: TObject;
+  const AResponse: IHTTPResponse);
+begin
+  if Assigned(FOnRequestCompletedEvent) then
+    FOnRequestCompletedEvent(Sender, AResponse);
+end;
+
+function TDropBoxApiV2.SetAccessToken(AValue: string): TDropBoxApiV2;
+begin
+  Result := Self;
+  FAccessToken := AVAlue;
+end;
+
+function TDropBoxApiV2.SetOnDownloadStatusUpdate(
+  AValue: TDownloadStatusUpdate): TDropBoxApiV2;
+begin
+  Result := Self;
+  FOnDownloadStatusUpdate := AValue;
+end;
+
+function TDropBoxApiV2.SetOnRequestCompletedEvent(
+  AValue: TRequestCompletedEvent): TDropBoxApiV2;
+begin
+  Result := Self;
+  FOnRequestCompletedEvent := AValue;
+end;
+
+{ TDropBoxApiNetHttp }
+
+destructor TDropBoxApiNetHttp.Destroy;
+begin
+  FreeAndNil(FNetHttpRequest);
+  FreeAndNil(FNetHttpClient);
+  inherited;
+end;
+
+class function TDropBoxApiNetHttp.GetInstance(const AContentType,
+  AMethodString: string): TDropBoxApiNetHttp;
+begin
+  Result := TDropBoxApiNetHttp.Create;
+
+  Result.FNetHttpClient := TNetHTTPClient.Create(nil);
+  Result.FNetHttpClient.Accept := '*/*';
+  Result.FNetHttpClient.AcceptCharSet := 'utf-8';
+  Result.FNetHttpClient.AcceptEncoding := 'gzip, deflate, br';
+  Result.FNetHttpClient.ContentType := AContentType;
+  Result.FNetHttpClient.UserAgent :=
+    'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; Acoo Browser; ' +
+    'GTB5; Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1) ; ' +
+    'Maxthon; InfoPath.1; .NET CLR 3.5.30729; .NET CLR 3.0.30618)';
+
+  Result.FNetHttpRequest := TNetHTTPRequest.Create(nil);
+  // FNetHttpRequest.OnReceiveData := NetHttpReceiveDataEvent;
+  // FNetHttpRequest.OnSendData := NetHttpReceiveDataEvent;
+  // FNetHttpRequest.OnRequestCompleted := NetHttpRequestCompletedEvent;
+  Result.FNetHttpRequest.Client := Result.FNetHttpClient;
+  if not AContentType.Trim.IsEmpty then
+    Result.FNetHttpRequest.CustHeaders.Add('Content-Type', AContentType);
+  Result.FNetHttpRequest.Accept := '*/*';
+  Result.FNetHttpRequest.AcceptCharSet := 'utf-8';
+  Result.FNetHttpRequest.AcceptEncoding := 'gzip, deflate, br';
+  Result.FNetHttpRequest.MethodString := 'POST';
 end;
 
 end.

@@ -7,105 +7,245 @@ object FormMain: TFormMain
   FormFactor.Width = 320
   FormFactor.Height = 480
   FormFactor.Devices = [Desktop]
+  OnShow = FormShow
   DesignerMasterStyle = 0
-  object btnCreateFolder: TButton
-    Align = Bottom
-    Position.Y = 510.000000000000000000
+  object TabControl1: TTabControl
+    Align = Client
     Size.Width = 340.000000000000000000
-    Size.Height = 50.000000000000000000
+    Size.Height = 373.000000000000000000
     Size.PlatformDefault = False
-    TabOrder = 5
-    Text = 'Create Folder'
-    OnClick = btnUploadClick
-  end
-  object btnDelete: TButton
-    Align = Bottom
-    Position.Y = 410.000000000000000000
-    Size.Width = 340.000000000000000000
-    Size.Height = 50.000000000000000000
-    Size.PlatformDefault = False
+    TabIndex = 0
     TabOrder = 3
-    Text = 'Delete'
-    OnClick = btnUploadClick
-  end
-  object btnDownload: TButton
-    Align = Bottom
-    Position.Y = 310.000000000000000000
-    Size.Width = 340.000000000000000000
-    Size.Height = 50.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 2
-    Text = 'Download'
-    OnClick = btnDownloadClick
-  end
-  object btnListFolder: TButton
-    Align = Bottom
-    Position.Y = 460.000000000000000000
-    Size.Width = 340.000000000000000000
-    Size.Height = 50.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 0
-    Text = 'List Folder'
-    OnClick = btnUploadClick
-  end
-  object btnUpload: TButton
-    Align = Bottom
-    Position.Y = 260.000000000000000000
-    Size.Width = 340.000000000000000000
-    Size.Height = 50.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 6
-    Text = 'Upload'
-    OnClick = btnUploadClick
+    TabPosition = PlatformDefault
+    Sizes = (
+      340s
+      347s
+      340s
+      347s)
+    object TabItem1: TTabItem
+      CustomIcon = <
+        item
+        end>
+      TextSettings.Trimming = None
+      IsSelected = True
+      Size.Width = 34.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'V2'
+      object btnV2ListFolder: TButton
+        Align = Bottom
+        Position.Y = 297.000000000000000000
+        Size.Width = 340.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        TabStop = False
+        Text = 'List Folder'
+        TextSettings.Trimming = None
+        OnClick = btnV2ListFolderClick
+      end
+      object memoResult: TMemo
+        Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+        DataDetectorTypes = []
+        Align = Client
+        Size.Width = 340.000000000000000000
+        Size.Height = 247.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        Viewport.Width = 336.000000000000000000
+        Viewport.Height = 243.000000000000000000
+      end
+      object btnV2Download: TButton
+        Align = Bottom
+        Position.Y = 247.000000000000000000
+        Size.Width = 340.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        Text = 'Download'
+        TextSettings.Trimming = None
+        OnClick = btnDownloadClick
+      end
+    end
+    object TabItem2: TTabItem
+      CustomIcon = <
+        item
+        end>
+      TextSettings.Trimming = None
+      IsSelected = False
+      Size.Width = 34.000000000000000000
+      Size.Height = 26.000000000000000000
+      Size.PlatformDefault = False
+      StyleLookup = ''
+      TabOrder = 0
+      Text = 'V1'
+      object btnCreateFolder: TButton
+        Align = Bottom
+        Position.Y = 297.000000000000000000
+        Size.Width = 340.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 5
+        Text = 'Create Folder'
+        TextSettings.Trimming = None
+        OnClick = btnUploadClick
+      end
+      object btnDelete: TButton
+        Align = Bottom
+        Position.Y = 197.000000000000000000
+        Size.Width = 340.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 3
+        Text = 'Delete'
+        TextSettings.Trimming = None
+        OnClick = btnUploadClick
+      end
+      object btnDownload: TButton
+        Align = Bottom
+        Position.Y = 97.000000000000000000
+        Size.Width = 340.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        Text = 'Download'
+        TextSettings.Trimming = None
+        OnClick = btnDownloadClick
+      end
+      object btnDownloadRange: TButton
+        Align = Bottom
+        Position.Y = 147.000000000000000000
+        Size.Width = 340.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        Text = 'Download Range'
+        TextSettings.Trimming = None
+        OnClick = btnDownloadClick
+      end
+      object btnListFolder: TButton
+        Align = Bottom
+        Position.Y = 247.000000000000000000
+        Size.Width = 340.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = 'List Folder'
+        TextSettings.Trimming = None
+        OnClick = btnUploadClick
+      end
+      object btnUpload: TButton
+        Align = Bottom
+        Position.Y = 47.000000000000000000
+        Size.Width = 340.000000000000000000
+        Size.Height = 50.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 6
+        Text = 'Upload'
+        TextSettings.Trimming = None
+        OnClick = btnUploadClick
+      end
+      object Memo1: TMemo
+        Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+        DataDetectorTypes = []
+        Lines.Strings = (
+          'For this example I'#39'm using a PNG file.'
+          'It'#39's been saved on .\assets\internal'
+          ''
+          
+            'PLEASE, do Upload first , then Download after, this way will be ' +
+            'better hahaha'
+          ''
+          'Take a look at the source code for more tips ;)'
+          ''
+          'Do you have ANY doubt?'
+          'PLEASE, take a look on the documentation first.'
+          'Thank you so much.')
+        TextSettings.WordWrap = True
+        Align = Client
+        Size.Width = 340.000000000000000000
+        Size.Height = 47.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 8
+        Viewport.Width = 320.000000000000000000
+        Viewport.Height = 43.000000000000000000
+      end
+    end
   end
   object ProgressBar1: TProgressBar
     Align = Bottom
     Orientation = Horizontal
-    Position.Y = 240.000000000000000000
+    Position.Y = 540.000000000000000000
     Size.Width = 340.000000000000000000
     Size.Height = 20.000000000000000000
     Size.PlatformDefault = False
   end
-  object Memo1: TMemo
-    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
-    DataDetectorTypes = []
-    Lines.Strings = (
-      'For this example I'#39'm using a PNG file.'
-      'It'#39's been saved on .\assets\internal'
-      ''
-      
-        'PLEASE, do Upload first , then Download after, this way will be ' +
-        'better hahaha'
-      ''
-      'Take a look at the source code for more tips ;)'
-      ''
-      'Do you have ANY doubt?'
-      'PLEASE, take a look on the documentation first.'
-      'Thank you so much.')
-    TextSettings.WordWrap = True
-    Align = Client
-    Size.Width = 340.000000000000000000
-    Size.Height = 240.000000000000000000
-    Size.PlatformDefault = False
-    TabOrder = 8
-    Viewport.Width = 336.000000000000000000
-    Viewport.Height = 236.000000000000000000
-    object AniIndicator1: TAniIndicator
-      Align = Bottom
-      Position.Y = 186.000000000000000000
-      Size.Width = 336.000000000000000000
-      Size.Height = 50.000000000000000000
-      Size.PlatformDefault = False
-    end
-  end
-  object btnDownloadRange: TButton
+  object AniIndicator1: TAniIndicator
     Align = Bottom
-    Position.Y = 360.000000000000000000
+    Position.Y = 490.000000000000000000
     Size.Width = 340.000000000000000000
     Size.Height = 50.000000000000000000
     Size.PlatformDefault = False
+  end
+  object Label1: TLabel
+    Align = Top
+    Size.Width = 340.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Access Token'
+    TabOrder = 9
+    TabStop = False
+  end
+  object edtAccessToken: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    Align = Top
+    TabOrder = 0
+    Position.Y = 17.000000000000000000
+    Size.Width = 340.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    OnTyping = edtAccessTokenTyping
+  end
+  object Label2: TLabel
+    Align = Top
+    Position.Y = 39.000000000000000000
+    Size.Width = 340.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'Folder Path'
+    TabOrder = 8
+    TabStop = False
+  end
+  object edtFolderPath: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    Align = Top
     TabOrder = 1
-    Text = 'Download Range'
-    OnClick = btnDownloadClick
+    Position.Y = 56.000000000000000000
+    Size.Width = 340.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    OnTyping = edtAccessTokenTyping
+  end
+  object Label3: TLabel
+    Align = Top
+    Position.Y = 78.000000000000000000
+    Size.Width = 340.000000000000000000
+    Size.Height = 17.000000000000000000
+    Size.PlatformDefault = False
+    Text = 'File name (only the name, no path)'
+    TabOrder = 6
+    TabStop = False
+  end
+  object edtFileName: TEdit
+    Touch.InteractiveGestures = [LongTap, DoubleTap]
+    Align = Top
+    TabOrder = 2
+    Position.Y = 95.000000000000000000
+    Size.Width = 340.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    OnTyping = edtAccessTokenTyping
   end
 end
