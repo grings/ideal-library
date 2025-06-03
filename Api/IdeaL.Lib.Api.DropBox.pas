@@ -725,12 +725,12 @@ begin
   try
     LJson := TJSONObject.Create;
     try
-      LJson.AddPair('include_deleted', False);
-      LJson.AddPair('include_has_explicit_shared_members', False);
-      LJson.AddPair('include_media_info', False);
-      LJson.AddPair('include_mounted_folders', True);
+      LJson.AddPair('include_deleted', TJSONBool.Create(False));
+      LJson.AddPair('include_has_explicit_shared_members', TJSONBool.Create(False));
+      LJson.AddPair('include_media_info', TJSONBool.Create(False));
+      LJson.AddPair('include_mounted_folders', TJSONBool.Create(True));
       LJson.AddPair('path', APath);
-      LJson.AddPair('recursive', False);
+      LJson.AddPair('recursive', TJSONBool.Create(False));
       LParams.Add(LJson.ToString);
     finally
       LJson.Free;

@@ -17,6 +17,8 @@ type
   TDSFireDAC = class(TInterfacedObject, IDataSet)
   private
     FConn: IConnection;
+
+    procedure QueryBeforeOpenDebug(DataSet: TDataSet);
     { Private declarations }
   public
     constructor Create(AConn: IConnection);
@@ -102,11 +104,7 @@ begin
     TFDQuery(Result).SQL.Clear;
     TFDQuery(Result).SQL.Add(ASql.Trim);
 {$IF defined(MSWINDOWS) and defined(DEBUG)}
-    try
-      TFDQuery(Result).SQL.SaveToFile('ScriptGetDataSet.sql');
-    except
-
-    end;
+    TFDQuery(Result).BeforeOpen := QueryBeforeOpenDebug;
 {$IFEND}
     if not TFDQuery(Result).SQL.Text.Trim.IsEmpty then
       TFDQuery(Result).Open;
@@ -162,6 +160,15 @@ begin
     LQry.Close;
   finally
     FreeAndNil(LQry);
+  end;
+end;
+
+procedure TDSFireDAC.QueryBeforeOpenDebug(DataSet: TDataSet);
+begin
+  try
+    TFDQuery(DataSet).SQL.SaveToFile('ScriptGetDataSet.sql');
+  except
+
   end;
 end;
 
