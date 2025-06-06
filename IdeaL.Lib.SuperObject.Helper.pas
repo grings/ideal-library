@@ -64,6 +64,8 @@ type
     class function SuperArrayGetItem(AJson: string; const AIndex: Integer): ISuperObject; overload;
     class function SuperArrayGetItem(ASAry: ISuperArray; const AIndex: Integer): ISuperObject; overload;
 
+    /// <summary> Copy 1->2, Object2 should be the copied result one
+    /// </summary>
     class procedure CopyA(AAry1, AAry2: ISuperArray; AForceField: Boolean = True);
     class procedure CopyO(AObj1: ISuperObject; AObj2: ISuperObject; AForceField: Boolean = True); overload;
     class procedure CopyO(AJson: string; AObj2: ISuperObject; AForceField: Boolean = True); overload;
@@ -116,49 +118,18 @@ class procedure TSuperObjectHelper.CopyA(AAry1, AAry2: ISuperArray;
 var
   i: Integer;
 begin
-  TUtils.ThrowExceptionMethodIsNotImplemented('TSuperObjectHelper.CopyA');
-  (* for var i := 0 to Pred(AAry1.Length) do
-    begin
-    var
-    LSObj := AAry1.O[i];
-
-    // Check if the ID was found,
-    if not VarIsNull(LSObj.V['id']) then
-    begin
-    if LDs.Locate('ID', VarArrayOf([LSObj.I['id']]), [loCaseInsensitive]) then
-    LDs.Edit;
+  for var LMember1 in AAry1 do
+  begin
+    case LMember1.DataType of
+      dtObject:
+        AAry2.Add(LMember1.AsObject);
+      dtArray:
+        AAry2.Add(LMember1.AsArray);
+    else
+      AAry2.Add(LMember1.AsVariant);
     end;
 
-    if not(LDs.State in dsEditModes) then
-    begin
-    LDs.Append;
-    LDs.FieldByName('ID').Value := LSObj.V['id'];;
-    end;
-
-    LSObj.First;
-    while not LSObj.EoF do
-    begin
-    LField := nil;
-    // loop all field different than the keys
-    if not UpperCase(LSObj.CurrentKey).Equals('ID') then
-    begin
-    for var j := 0 to Pred(LDs.FieldCount) do
-    begin
-    if UpperCase(LDs.Fields[j].FieldName).Equals(UpperCase(LSObj.CurrentKey)) then
-    begin
-    LField := LDs.Fields[j];
-    Break;
-    end;
-    end;
-    end;
-
-    if Assigned(LField) then
-    LField.Value := LSObj.CurrentValue.AsVariant;
-
-    LSObj.Next;
-    end;
-    LDs.Post;
-    end; *)
+  end;
 end;
 
 class procedure TSuperObjectHelper.CopyO(AObj1: ISuperObject;
