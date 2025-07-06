@@ -572,11 +572,8 @@ function TFmxMessageDialog.Prepare: TFmxMessageItem;
       FBtnWidth
       );
     LBtn := LLyt.Children[0] as TButton;
-{$IFDEF MSWINDOWS}
     LBtn.OnClick := DoClickButton;
-{$ELSE}
     LBtn.OnTap := DoTapButton;
-{$ENDIF}
   end;
 
 begin

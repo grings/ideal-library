@@ -110,7 +110,7 @@ begin
   LHeader: TNetHeaders;
   LHeader :=
     [
-      TNameValuePair.Create('Authorization', 'Bearer ' + FAuthToken),
+      // TNameValuePair.Create('Authorization', 'Bearer ' + FAuthToken),
       TNameValuePair.Create('Content-Type', 'application/json; charset=utf-8'),
       TNameValuePair.Create('Accept', '*/*')
     ];
