@@ -107,7 +107,8 @@ uses
 {$IFDEF KASTRI}
   , 
   DW.OSDevice,
-  DW.Connectivity
+  DW.Connectivity,
+  DW.ShareItems
 {$ENDIF}
 {$ENDIF}
 {$IF declared(FireMonkeyVersion)}
@@ -137,13 +138,13 @@ type
     class var FChangeTabAction: TChangeTabAction;
     class procedure SetChangeTabAction(const Value: TChangeTabAction); static;
 {$ENDIF}
-{$IF DEFINED (KASTRI) and DEFINED (ANDROID)}
+{$IF DEFINED (KASTRI)}
     class procedure ShareFilesCompletedHandler(Sender: TObject; const AActivity: TShareActivity; const AError: string);
 {$ENDIF}
   public
     type
-    TFileType = (ftPdf);
-{$IF DEFINED (KASTRI) and DEFINED (ANDROID)}
+    TFileType = (ftCsv, ftPdf);
+{$IF DEFINED (KASTRI)}
     TShareActivity = DW.ShareItems.TShareActivity;
 {$ENDIF}
 
@@ -315,7 +316,7 @@ type
 {$ENDIF}
     class procedure ShareSheetText(const AText: string);
     class procedure ShareSheetFile(const AFilePathFull: string;
-{$IF NOT (DEFINED (KASTRI)  and DEFINED (ANDROID))} AFileType: TFileType = ftPdf{$ELSE}
+{$IF NOT DEFINED (KASTRI)} AFileType: TFileType = ftPdf{$ELSE}
       const AControl: TControl; AOnCompletedEvent: TShareCompletedEvent = nil{$ENDIF});
 
     class function GetEnumName<T { : enum } >(AValue: T): string;
@@ -2259,6 +2260,7 @@ var
   LBeforeSeparate: string;
   LAfterSeparate: string;
   LLength: Integer;
+  LIsNegative: Boolean;
   i: Integer;
 
   LExtendedFormat: string;
@@ -2266,6 +2268,9 @@ var
 begin
   if FormatSettings.DecimalSeparator = FormatSettings.ThousandSeparator then
     ThrowExceptionSomethingWentWrong('IdeaL.Lib.Utils.TUtils.FormatCurrency FormatSettings.DecimalSeparator = FormatSettings.ThousandSeparator');
+
+  LIsNegative := AValue.Trim.StartsWith('-');
+  AValue := StringReplace(AValue, '-', EmptyStr, []);
 
   if (Pos(FormatSettings.DecimalSeparator, AValue) <= 0) then
   begin
@@ -2302,9 +2307,19 @@ begin
 
   if TryStrToFloat(Result, LExtended) then
   begin
-    LExtendedFormat := '#0' + FormatSettings.ThousandSeparator + FormatSettings.DecimalSeparator + '00';
+    var
+    LDecimalStr := EmptyStr;
+    for i := 1 to ADecimalLenght do
+      LDecimalStr := LDecimalStr + '0';
+
+    LExtendedFormat := '#0' + FormatSettings.ThousandSeparator + FormatSettings.DecimalSeparator + LDecimalStr;
     Result := System.SysUtils.FormatFloat(LExtendedFormat, LExtended);
   end;
+
+  var
+  LDouble : Double := 0.0;
+  if (LIsNegative) and (TryStrToFloat(Result, LDouble)) and (LDouble <> 0) then
+  Result := '-' + Result;
 end;
 
 class function TUtils.FormatDate(const AValue: string): string;
@@ -3474,11 +3489,11 @@ begin
 end;
 
 class procedure TUtils.ShareSheetFile(const AFilePathFull: string;
-{$IF NOT (DEFINED (KASTRI) and DEFINED (ANDROID))} AFileType: TFileType{$ELSE}
+{$IF NOT DEFINED (KASTRI)} AFileType: TFileType{$ELSE}
 const AControl: TControl; AOnCompletedEvent: TShareCompletedEvent
 {$ENDIF});
 var
-{$IF DEFINED (KASTRI) and DEFINED (ANDROID)}
+{$IF DEFINED (KASTRI)}
   LShareItems: TShareItems;
   LExcluded: TShareActivities;
 {$ELSEIF DEFINED (ANDROID)}
@@ -3489,7 +3504,7 @@ var
 {$ENDIF}
   LFileType: string;
 begin
-{$IF DEFINED (KASTRI) and DEFINED (ANDROID)}
+{$IF DEFINED (KASTRI)}
   LShareItems := TShareItems.Create;
   LExcluded := [];
   try
@@ -3527,7 +3542,7 @@ begin
 {$ENDIF}
 end;
 
-{$IF DEFINED (KASTRI) and DEFINED (ANDROID)}
+{$IF DEFINED (KASTRI)}
 
 class procedure TUtils.ShareFilesCompletedHandler(Sender: TObject; const AActivity: TShareActivity; const AError: string);
 begin

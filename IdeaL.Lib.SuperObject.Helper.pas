@@ -149,7 +149,9 @@ class procedure TSuperObjectHelper.CopyO(AObj1: ISuperObject;
           then
             AItem2.I[ACurrentKey] := AItem1.B[ACurrentKey].ToInteger
           else
+          begin
             AItem2.I[ACurrentKey] := AItem1.I[ACurrentKey];
+          end;
         end;
       varCurrency, varDouble:
         AItem2.F[ACurrentKey] := AItem1.F[ACurrentKey];
@@ -171,7 +173,13 @@ begin
       (AForceField)
     then
     begin
-      if (AObj2.Contains(LCurrentKey)) or (AForceField) then
+      if AForceField then
+      begin
+        AObj2.Remove(LCurrentKey);
+        AObj2.V[LCurrentKey] := AObj1.V[LCurrentKey];
+      end
+      else
+      if (AObj2.Contains(LCurrentKey)) then
       begin
         if AObj2.Null[LCurrentKey] = jNull then
           GetValue(AObj1, AObj2, LCurrentKey, AObj1.GetType(LCurrentKey))
