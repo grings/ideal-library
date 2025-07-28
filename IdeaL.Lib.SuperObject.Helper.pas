@@ -155,6 +155,10 @@ class procedure TSuperObjectHelper.CopyO(AObj1: ISuperObject;
         end;
       varCurrency, varDouble:
         AItem2.F[ACurrentKey] := AItem1.F[ACurrentKey];
+      varObject:
+        begin
+          StrToInt('1');
+        end
     else
       AItem2.V[ACurrentKey] := AItem1.CurrentValue.AsVariant;
     end;
@@ -176,7 +180,14 @@ begin
       if AForceField then
       begin
         AObj2.Remove(LCurrentKey);
-        AObj2.V[LCurrentKey] := AObj1.V[LCurrentKey];
+        case AObj1.GetType(LCurrentKey) of
+          varObject:
+            AObj2.O[LCurrentKey] := SO(AObj1.O[LCurrentKey].AsJSON);
+          varArray:
+            AObj2.A[LCurrentKey] := SA(AObj1.A[LCurrentKey].AsJSON);
+        else
+          AObj2.V[LCurrentKey] := AObj1.V[LCurrentKey];
+        end;
       end
       else
       if (AObj2.Contains(LCurrentKey)) then

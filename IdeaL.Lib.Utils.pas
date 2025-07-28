@@ -138,13 +138,13 @@ type
     class var FChangeTabAction: TChangeTabAction;
     class procedure SetChangeTabAction(const Value: TChangeTabAction); static;
 {$ENDIF}
-{$IF DEFINED (KASTRI)}
+{$IF DEFINED (KASTRI) AND (DEFINED (ANDROID) OR DEFINED(IOS))}
     class procedure ShareFilesCompletedHandler(Sender: TObject; const AActivity: TShareActivity; const AError: string);
 {$ENDIF}
   public
     type
     TFileType = (ftCsv, ftPdf);
-{$IF DEFINED (KASTRI)}
+{$IF DEFINED (KASTRI) AND (DEFINED (ANDROID) OR DEFINED(IOS))}
     TShareActivity = DW.ShareItems.TShareActivity;
 {$ENDIF}
 
@@ -316,7 +316,7 @@ type
 {$ENDIF}
     class procedure ShareSheetText(const AText: string);
     class procedure ShareSheetFile(const AFilePathFull: string;
-{$IF NOT DEFINED (KASTRI)} AFileType: TFileType = ftPdf{$ELSE}
+{$IF NOT (DEFINED (KASTRI) AND (DEFINED (ANDROID) OR DEFINED(IOS)))} AFileType: TFileType = ftPdf{$ELSE}
       const AControl: TControl; AOnCompletedEvent: TShareCompletedEvent = nil{$ENDIF});
 
     class function GetEnumName<T { : enum } >(AValue: T): string;
@@ -3489,11 +3489,11 @@ begin
 end;
 
 class procedure TUtils.ShareSheetFile(const AFilePathFull: string;
-{$IF NOT DEFINED (KASTRI)} AFileType: TFileType{$ELSE}
+{$IF NOT (DEFINED (KASTRI) AND (DEFINED (ANDROID) OR DEFINED(IOS)))} AFileType: TFileType{$ELSE}
 const AControl: TControl; AOnCompletedEvent: TShareCompletedEvent
 {$ENDIF});
 var
-{$IF DEFINED (KASTRI)}
+{$IF DEFINED (KASTRI) AND (DEFINED (ANDROID) OR DEFINED(IOS))}
   LShareItems: TShareItems;
   LExcluded: TShareActivities;
 {$ELSEIF DEFINED (ANDROID)}
@@ -3504,7 +3504,7 @@ var
 {$ENDIF}
   LFileType: string;
 begin
-{$IF DEFINED (KASTRI)}
+{$IF DEFINED (KASTRI) AND (DEFINED (ANDROID) OR DEFINED(IOS))}
   LShareItems := TShareItems.Create;
   LExcluded := [];
   try
@@ -3542,7 +3542,7 @@ begin
 {$ENDIF}
 end;
 
-{$IF DEFINED (KASTRI)}
+{$IF DEFINED (KASTRI) AND (DEFINED (ANDROID) OR DEFINED(IOS))}
 
 class procedure TUtils.ShareFilesCompletedHandler(Sender: TObject; const AActivity: TShareActivity; const AError: string);
 begin
