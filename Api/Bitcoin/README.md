@@ -1,9 +1,19 @@
-# Bitcoin
+# [Bitcoin](https://bitcoin.org/bitcoin.pdf)
 
 Integrations related with Bitcoin environment.<br />
 You can find the examples on folder Demos/Api/Bitcoin.<br />
 
 ⚠️The units and the demonstration projects all full of source code commentaries, please feel free to read them all.
+
+## [DIGPIX](https://vempradig.com/digpix)
+
+[VemPraDig API official doc](https://vempradig.com/digpix/api-doc)
+
+DIGPIX is a brazilian bitcoin P2P, that works selling bitcoin over the [DePIX](https://www.depix.info/) framework.<br />
+⚠️Please, do not mistake DePIX with Brazilian PIX payment method. Read DePIX official documentation for more info!<br />
+
+Using VemPraDig API implementation you will be able to receive in BTC while your customer pays you in R$ (Brazilian currency).<br />
+⚠️VemPraDig API official doc is only accessable after creating an account, please, be in touch with their [support](https://vempradig.com/dig/#contato).<br />
 
 ## [Alby](https://getalby.com/)
 
