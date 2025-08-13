@@ -171,7 +171,7 @@ type
     class function JustNumber(const AValue: string; const AStartWithOne: Boolean = False): string;
     class function RemoveSpecialCharacter(const AValue: string): string;
     class function FormatDate(const AValue: string): string;
-	class function FormatCnpj(const AValue: String): String;														
+	  class function FormatCnpj(const AValue: String): String;
     class function FormatCpfCnpj(const AValue: String): String;
     class function FormatCep(const AValue: string; AIsAddDot: Boolean = True): String;
     class function FormatPhoneNumber(const AValue: String): String;
@@ -723,6 +723,11 @@ begin
     LValue := StringReplace(LValue, '-', EmptyStr, [rfReplaceAll]);
     if not LValue.Trim.IsEmpty then
     begin
+{$IF defined(IOS) and defined(KASTRI)}
+      // It was found an issue on iOS17+, forced to use the following
+      // Make sure of following the international pattern +xxNumber
+      OpenUrl('tel:' + LValue);
+{$ELSE}
       // test whether the PhoneDialer services are supported
       if TPlatformServices.Current.SupportsPlatformService(IFMXPhoneDialerService,
         IInterface(PhoneDialerService))
@@ -731,6 +736,7 @@ begin
         PhoneDialerService.Call(LValue);
         Result := True;
       end;
+{$ENDIF}
     end;
 {$ELSE}
     raise Exception.Create('TUtils.CallNumber');
