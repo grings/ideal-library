@@ -78,6 +78,7 @@ type
   private
     FTxtHeader: TText;
     FTextSettingsTxtHeader: TTextSettings;
+    FTextSettingsBtn: TTextSettings;
     FMsgTypeButton: TMsgTypeButton;
     FBtnStyleLookup: string;
     FLytButton: TLayout;
@@ -107,6 +108,7 @@ type
     function BtnTxtOkCancel(AOk, ACancel: string): TFmxMessageDialog;
     function BtnTxtYesNo(AYes, ANo: string): TFmxMessageDialog;
     function BtnTxt(AOk, ACancel, AYes, ANo: string): TFmxMessageDialog;
+    function BtnTextSettings(AValue: TTextSettings): TFmxMessageDialog;
 
     function Show: TFmxMessageItem; reintroduce;
     function Prepare: TFmxMessageItem; overload; virtual;
@@ -413,6 +415,15 @@ begin
   FBtnStyleLookup := AValue;
 end;
 
+function TFmxMessageDialog.BtnTextSettings(
+  AValue: TTextSettings): TFmxMessageDialog;
+begin
+  Result := Self;
+
+  FreeAndNil(FTextSettingsBtn);
+  FTextSettingsBtn := AValue;
+end;
+
 function TFmxMessageDialog.BtnTxt(AOk, ACancel, AYes,
   ANo: string): TFmxMessageDialog;
 begin
@@ -465,6 +476,7 @@ begin
   FBtnTxtYes := 'Yes';
   FBtnTxtNo := 'No';
   FBtnWidth := 0;
+  FTextSettingsBtn := nil;
 
   FTxtHeader := TText.Create(AOwner);
   FTxtHeader.Parent := LytBackground;
@@ -489,6 +501,8 @@ destructor TFmxMessageDialog.Destroy;
 begin
   if Assigned(FTextSettingsTxtHeader) then
     FreeAndNil(FTextSettingsTxtHeader);
+  if Assigned(FTextSettingsBtn) then
+    FreeAndNil(FTextSettingsBtn);
   inherited;
 end;
 
@@ -574,6 +588,19 @@ function TFmxMessageDialog.Prepare: TFmxMessageItem;
     LBtn := LLyt.Children[0] as TButton;
     LBtn.OnClick := DoClickButton;
     LBtn.OnTap := DoTapButton;
+    if Assigned(FTextSettingsBtn) then
+    begin
+      if LBtn.TextSettings.Font.Style <> FTextSettingsBtn.Font.Style then
+        LBtn.StyledSettings := LBtn.StyledSettings - [TStyledSetting.Style];
+      if LBtn.TextSettings.Font.Size <> FTextSettingsBtn.Font.Size then
+        LBtn.StyledSettings := LBtn.StyledSettings - [TStyledSetting.Size];
+      if LBtn.TextSettings.Font.Family <> FTextSettingsBtn.Font.Family then
+        LBtn.StyledSettings := LBtn.StyledSettings - [TStyledSetting.Family];
+      if LBtn.TextSettings.FontColor <> FTextSettingsBtn.FontColor then
+        LBtn.StyledSettings := LBtn.StyledSettings - [TStyledSetting.FontColor];
+
+      LBtn.TextSettings := FTextSettingsBtn;
+    end;
   end;
 
 begin

@@ -265,6 +265,14 @@ begin
           LItem.TextSettingsTxtHeader(LTxtStgsHeader);
           LItem.TextHeader(AHeader);
 
+		  // Button Text Settings
+          var
+          LTxtStgsBtn := TTextSettings.Create(FMsgDialog);
+          LTxtStgsBtn.Font.Style := [TFontStyle.fsBold];
+          LTxtStgsBtn.HorzAlign := TTextAlign.Center;
+          LTxtStgsBtn.VertAlign := TTextAlign.Center;
+          LItem.BtnTextSettings(LTxtStgsBtn);
+
           LItem.BtnStyleLookup('btnTransparent');
           LItem.ButtonType(AMsgBtnType);
           // LItem.MsgType(AMsgType);}
