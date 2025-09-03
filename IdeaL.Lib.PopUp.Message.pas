@@ -352,15 +352,15 @@ begin
           end;
           OnPainting := DoOnPainting;
         end);
-      TThread.Sleep(5);
+      TThread.Sleep(50);
       TThread.Synchronize(nil,
         procedure
         begin
           if not Trim(Name).IsEmpty then
-            Height := Height + 1;
+            Height := Height + 2;
           var
           LHeight := Height;
-          Repaint;
+          DoResize;
         end);
     end).Start;
 end;
