@@ -184,11 +184,26 @@ var
   LJsonObject: TJSONObject;
 {$ENDIF}
 begin
-  {
+  (*
     All rules bellow were implemented based on official doc at 2025-08-11
 
     The PIX has 10min expiration time, this is not negotiable
-  }
+	
+	2025-09-11
+	WehBook will be requested when the PIX is paid and the BTC are sent properly.
+	If some error happens, the PIX payment will be refunded automatically.
+	
+	WebHook specs:
+	Secret comes in header
+	BODY should be JSON Object as follow:
+	{
+    	"status": "PAID", # status of the PIX payment
+    	"payment_id": "019885eefdd97fa190ec3e0821920844", # DePIX internal ID
+    	"amount_brl": 10.50, # original BRL amount
+    	"amount_btc": "0.00001234", # BTC amount sent to registered Address
+    	"amount_sats": 1234 # BTC amount sent to registered Address
+	}
+  *)
 
 
   if (AAmount < 10) or (AAmount > 5000) then
