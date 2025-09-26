@@ -28,6 +28,7 @@ Feel free to use the Demo/Api/Bitcoin/Alby project, which also has a step-by-ste
 
 Feel free to use the Demo/Api/Bitcoin/CoinOS project.<br />
 There is also a video demonstration on [Youtube](https://www.youtube.com/watch?v=l4bSgcR4Z5c) (subtitles available).<br />
+Awesome CoinOS, list of implemented solutions: [link](https://github.com/igorbastosib/awesome-coinos)<br />
 
 ## Exchange
 
