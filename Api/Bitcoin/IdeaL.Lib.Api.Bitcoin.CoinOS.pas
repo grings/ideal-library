@@ -125,6 +125,10 @@ type
     /// <summary> Send a bitcoin payment
     /// </summary>
     function PostBitcoinSend(AAmount: Integer; AAddress: string): string;
+
+    /// <summary> Request Token to access ONLY "Create Invoice" and "Payment History"
+    /// </summary>
+    function GetRo(): string;
     { public declarations }
   end;
 
@@ -153,6 +157,60 @@ var
 begin
   LUrl := Format('%s/rates', [CUrlApi]);
   Result := Get(LUrl);
+end;
+
+function TAPICoinOS.GetRo: string;
+var
+  LUrl: string;
+  LInt64: Int64;
+{$IFDEF FPC}
+  LHttpClient: TFPHttpClient;
+  LResponse : TStringList;
+{$ELSE}
+  LHttp: THTTPClient;
+  LResponse: IHTTPResponse;
+{$ENDIF}
+begin
+  LUrl := Format('%s/%s', [CUrlApi, 'ro']);
+{$IFDEF FPC}
+  InitSSLInterface;
+  GetNetHttpRequestLocal(LHttpClient);
+  try
+    LResponse := TStringList.Create;
+    try
+      LHttpClient.ConnectTimeout := 20000;
+      LHttpClient.Get(LUrl, LResponse);
+      if LHttpClient.ResponseStatusCode <> 200 then
+        raise exception.create(LHttpClient.ResponseStatusText);
+      Result := LResponse.Text;
+    finally
+      LHttpClient.RequestBody.Free;
+      LResponse.Free;
+    end;
+  finally
+    LHttpClient.Free;
+  end;
+{$ELSE}
+  var
+  LHeader: TNetHeaders;
+  LHeader :=
+    [
+      TNameValuePair.Create('Authorization', 'Bearer ' + FAuthToken),
+      // TNameValuePair.Create('Content-Type', 'application/json; charset=utf-8'),
+      TNameValuePair.Create('Accept', '*/*')
+    ];
+
+  LHttp := THTTPClient.Create;
+  try
+    LResponse := LHttp.Get(LUrl, nil, LHeader);
+  finally
+    FreeAndNil(LHttp);
+  end;
+
+  if LResponse.StatusCode <> 200 then
+    raise Exception.Create(LResponse.StatusCode.ToString + ' ' + LResponse.StatusText);
+  Result := LResponse.ContentAsString(TEncoding.UTF8);
+{$ENDIF}
 end;
 
 function TAPICoinOS.Get(AUrl: string): string;

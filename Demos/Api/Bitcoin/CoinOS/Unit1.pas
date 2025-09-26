@@ -80,7 +80,6 @@ type
     edtProfilePictureUrl: TEdit;
     lblProfileBalanceFiat: TLabel;
     btnPostUser: TButton;
-    btnPrivateDataShowHide: TButton;
     HorzScrollBox1: THorzScrollBox;
     gbxGeneral: TGroupBox;
     Label24: TLabel;
@@ -94,6 +93,15 @@ type
     Label28: TLabel;
     btnGetPayments: TButton;
     Label8: TLabel;
+    lytToken: TLayout;
+    Label29: TLabel;
+    lytTokenRo: TLayout;
+    Label30: TLabel;
+    edtTokenRo: TEdit;
+    Label31: TLabel;
+    btnPrivateDataShowHide: TButton;
+    chkTokenRo: TCheckBox;
+    lytTokenRoInfo: TLayout;
     procedure Label1Click(Sender: TObject);
     procedure btnInvoiceLNCreateClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -192,7 +200,7 @@ begin
   LApiCoinOS := TAPICoinOS.Create;
   try
     LApiCoinOS.AuthToken(edtExportedToken.Text);
-    LResult := LApiCoinOS.GetMe;    
+    LResult := LApiCoinOS.GetMe;
   finally
     LApiCoinOS.Free;
   end;
@@ -279,7 +287,10 @@ begin
   var
   LApiCoinOS := TAPICoinOS.Create;
   try
-    LApiCoinOS.AuthToken(edtExportedToken.Text);
+    if chkTokenRo.IsChecked then
+      LApiCoinOS.AuthToken(edtTokenRo.Text)
+    else
+      LApiCoinOS.AuthToken(edtExportedToken.Text);
     var
     LResult := LApiCoinOS.GetPayments(dedtPaymentsFrom.Date, dedtPaymentsTo.Date, edtPaymentsLimit.Text.ToInteger, edtPaymentsOffset.Text.ToInteger);
     AddListBox(LResult);
@@ -365,8 +376,11 @@ end;
 
 procedure TForm1.btnPrivateDataShowHideClick(Sender: TObject);
 begin
-  edtPassword.Password := not edtPassword.Password;
-  edtExportedToken.Password := not edtExportedToken.Password;
+  var
+  LBool := not edtPassword.Password;
+  edtPassword.Password := LBool;
+  edtExportedToken.Password := LBool;
+  edtTokenRo.Password := LBool;
 end;
 
 procedure TForm1.btnQrCodeFromInvoiceClick(Sender: TObject);
@@ -428,7 +442,10 @@ begin
   var
   LApiCoinOS := TAPICoinOS.Create;
   try
-    LApiCoinOS.AuthToken(edtExportedToken.Text);
+    if chkTokenRo.IsChecked then
+      LApiCoinOS.AuthToken(edtTokenRo.Text)
+    else
+      LApiCoinOS.AuthToken(edtExportedToken.Text);
     var
     LAmount := StrToInt(edtInvoiceLNAmount.Text);
     var
@@ -463,6 +480,12 @@ begin
 
     AddListBox(LResult);
     AddLog(LResult);
+
+    // Token RO
+    LApiCoinOS.AuthToken(edtExportedToken.Text);
+    LResult := LApiCoinOS.GetRo;
+    edtTokenRo.Text := LResult;
+
   finally
     LApiCoinOS.Free;
   end;
@@ -545,6 +568,8 @@ begin
       edtPassword.Text := LStr;
     if LJSONObj.TryGetValue<string>('exportedToken', LStr) then
       edtExportedToken.Text := LStr;
+    if LJSONObj.TryGetValue<string>('roToken', LStr) then
+      edtTokenRo.Text := LStr;
   finally
     LJSONObj.Free;
   end;
@@ -574,6 +599,7 @@ begin
     LJSONObj.AddPair('username', edtUsername.Text);
     LJSONObj.AddPair('password', edtPassword.Text);
     LJSONObj.AddPair('exportedToken', edtExportedToken.Text);
+    LJSONObj.AddPair('roToken', edtTokenRo.Text);
     TFile.WriteAllText(CConfigFileName, LJSONObj.ToString);
   finally
     LJSONObj.Free;
