@@ -29,7 +29,7 @@ uses
 
   // Receiver
   System.PushNotification,
-{$IF (defined(MSWINDOWS) or defined(LINUX))}
+{$IF ((defined(MSWINDOWS) or defined(LINUX))) and (not defined(FMX))}
   DW.FCMSender,
 {$ENDIF}
 {$IFDEF ANDROID}
@@ -106,7 +106,7 @@ type
     { public declarations }
   end;
 
-{$IF defined(MSWINDOWS) or defined(LINUX)}
+{$IF (defined(MSWINDOWS) or defined(LINUX)) and (not defined(FMX))}
   TPushNotificationSender = class
   private
     const
@@ -411,7 +411,7 @@ begin
   end;
 end;
 
-{$IF defined(MSWINDOWS) or defined(LINUX)}
+{$IF (defined(MSWINDOWS) or defined(LINUX)) and (not defined(FMX))}
 { TPushNotificationSender }
 
 constructor TPushNotificationSender.Create;
@@ -740,7 +740,7 @@ end;
 initialization
 
 TPushNotificationReceiver.FPushNotification := nil;
-{$IFDEF MSWINDOWS}
+{$IF (defined(MSWINDOWS) or defined(LINUX)) and (not defined(FMX))}
 TPushNotificationSender.FPushNotification := nil;
 TPushNotificationSenderV1.FPushNotification := nil;
 {$ENDIF}
@@ -748,7 +748,7 @@ TPushNotificationSenderV1.FPushNotification := nil;
 finalization
 
 FreeAndNil(TPushNotificationReceiver.FPushNotification);
-{$IFDEF MSWINDOWS}
+{$IF (defined(MSWINDOWS) or defined(LINUX)) and (not defined(FMX))}
 FreeAndNil(TPushNotificationSender.FPushNotification);
 FreeAndNil(TPushNotificationSenderV1.FPushNotification);
 {$ENDIF}
