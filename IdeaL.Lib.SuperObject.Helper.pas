@@ -48,7 +48,8 @@ type
     TDataType = XSuperJSON.TDataType;
 
     const
-    varIntegerArray: TVarTypeArray = [varInteger, varUInt32, varInt64, varUInt64];
+    varIntegerArray: TVarTypeArray = [varInteger, varUInt32, varInt64, varUInt64, varSingle];
+    varCurrencyArray: TVarTypeArray = [varInteger, varUInt32, varInt64, varUInt64, varSingle, varDouble, varCurrency];
 
     class function SA(AJson: string = ''): ISuperArray;
     class function SO(const AJson: string = ''): ISuperObject;
