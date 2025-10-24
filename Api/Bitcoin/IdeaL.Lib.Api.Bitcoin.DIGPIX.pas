@@ -220,7 +220,7 @@ begin
   then
     raise Exception.Create('Invalid value [webhook]');
 
-  LUrl := Format('%s/%s', [CUrlApi, 'qrcode']);
+  LUrl := Format('%s%s', [CUrlApi, 'qrcode']);
   LBody := EmptyStr;
 {$IFDEF FPC}
   LJsonData :=  GetJSON('{}');
