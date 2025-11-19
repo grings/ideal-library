@@ -232,18 +232,17 @@ object Form1: TForm1
         TabOrder = 5
         Viewport.Width = 883.000000000000000000
         Viewport.Height = 149.000000000000000000
-        object gbxLnInvoicePay: TGroupBox
+        object gbxPayLnInvoice: TGroupBox
           Align = Left
           Position.X = 610.000000000000000000
           Size.Width = 305.000000000000000000
           Size.Height = 149.000000000000000000
           Size.PlatformDefault = False
           Text = 'Pay LN Invoice   '
-          TabOrder = 3
+          TabOrder = 4
           object Label12: TLabel
             Align = Top
             AutoSize = True
-            Cursor = crHandPoint
             StyledSettings = [Family]
             HitTest = True
             Margins.Left = 10.000000000000000000
@@ -337,8 +336,8 @@ object Form1: TForm1
             Margins.Top = 15.000000000000000000
             Margins.Right = 10.000000000000000000
             Margins.Bottom = 10.000000000000000000
-            Position.X = 10.000000000000000000
-            Position.Y = 114.000000000000000000
+            Position.X = 14.000000000000000000
+            Position.Y = 113.000000000000000000
             Size.Width = 31.000000000000000000
             Size.Height = 15.000000000000000000
             Size.PlatformDefault = False
@@ -521,7 +520,7 @@ object Form1: TForm1
             Size.PlatformDefault = False
             TextSettings.WordWrap = False
             Text = 'Username'
-            TabOrder = 38
+            TabOrder = 37
             TabStop = False
           end
           object edtProfileUsername: TEdit
@@ -540,7 +539,7 @@ object Form1: TForm1
             TextSettings.HorzAlign = Trailing
             TextSettings.WordWrap = False
             Text = 'Balance:'
-            TabOrder = 39
+            TabOrder = 38
             TabStop = False
           end
           object lblProfileBalanceSatoshi: TLabel
@@ -552,7 +551,7 @@ object Form1: TForm1
             TextSettings.HorzAlign = Trailing
             TextSettings.WordWrap = False
             Text = 'Balance in sats'
-            TabOrder = 40
+            TabOrder = 39
             TabStop = False
           end
           object Label22: TLabel
@@ -564,7 +563,7 @@ object Form1: TForm1
             Size.PlatformDefault = False
             TextSettings.WordWrap = False
             Text = 'Currency'
-            TabOrder = 43
+            TabOrder = 42
             TabStop = False
           end
           object cbxProfileCurrency: TComboBox
@@ -588,7 +587,7 @@ object Form1: TForm1
             Size.PlatformDefault = False
             TextSettings.WordWrap = False
             Text = 'Photo URL'
-            TabOrder = 45
+            TabOrder = 44
             TabStop = False
           end
           object edtProfilePictureUrl: TEdit
@@ -609,7 +608,7 @@ object Form1: TForm1
             TextSettings.HorzAlign = Trailing
             TextSettings.WordWrap = False
             Text = 'Balance in fiat'
-            TabOrder = 44
+            TabOrder = 43
             TabStop = False
           end
           object btnPostUser: TButton
@@ -627,7 +626,7 @@ object Form1: TForm1
         end
         object gbxGeneral: TGroupBox
           Align = Left
-          Position.X = 915.000000000000000000
+          Position.X = 1220.000000000000000000
           Size.Width = 305.000000000000000000
           Size.Height = 149.000000000000000000
           Size.PlatformDefault = False
@@ -636,7 +635,6 @@ object Form1: TForm1
           object Label24: TLabel
             Align = Top
             AutoSize = True
-            Cursor = crHandPoint
             StyledSettings = [Family]
             HitTest = True
             Margins.Left = 10.000000000000000000
@@ -667,7 +665,7 @@ object Form1: TForm1
             Size.PlatformDefault = False
             TextSettings.WordWrap = False
             Text = 'From'
-            TabOrder = 37
+            TabOrder = 38
             TabStop = False
             OnClick = lblGetInvoiceClick
           end
@@ -675,13 +673,13 @@ object Form1: TForm1
             Date = 45675.000000000000000000
             Position.X = 44.000000000000000000
             Position.Y = 46.000000000000000000
-            TabOrder = 42
+            TabOrder = 43
           end
           object dedtPaymentsTo: TDateEdit
             Date = 45675.000000000000000000
             Position.X = 172.000000000000000000
             Position.Y = 46.000000000000000000
-            TabOrder = 40
+            TabOrder = 41
           end
           object Label25: TLabel
             AutoSize = True
@@ -707,7 +705,7 @@ object Form1: TForm1
             Size.PlatformDefault = False
             TextSettings.WordWrap = False
             Text = 'Limit'
-            TabOrder = 47
+            TabOrder = 48
             TabStop = False
           end
           object edtPaymentsLimit: TEdit
@@ -737,7 +735,7 @@ object Form1: TForm1
             Size.PlatformDefault = False
             TextSettings.WordWrap = False
             Text = 'Offset'
-            TabOrder = 46
+            TabOrder = 47
             TabStop = False
           end
           object btnGetPayments: TButton
@@ -746,11 +744,161 @@ object Form1: TForm1
             Size.Width = 100.000000000000000000
             Size.Height = 22.000000000000000000
             Size.PlatformDefault = False
-            TabOrder = 41
+            TabOrder = 42
             TabStop = False
             Text = 'Get'
             TextSettings.Trimming = None
             OnClick = btnGetPaymentsClick
+          end
+        end
+        object gbxPayLnAddress: TGroupBox
+          Align = Left
+          Position.X = 915.000000000000000000
+          Size.Width = 305.000000000000000000
+          Size.Height = 149.000000000000000000
+          Size.PlatformDefault = False
+          Text = 'Pay LN Address'
+          TabOrder = 3
+          object Label32: TLabel
+            Align = Top
+            AutoSize = True
+            StyledSettings = [Family]
+            HitTest = True
+            Margins.Left = 10.000000000000000000
+            Margins.Top = 15.000000000000000000
+            Margins.Right = 10.000000000000000000
+            Margins.Bottom = 10.000000000000000000
+            Position.X = 10.000000000000000000
+            Position.Y = 15.000000000000000000
+            Size.Width = 285.000000000000000000
+            Size.Height = 30.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.Font.Size = 11.000000000000000000
+            TextSettings.Font.StyleExt = {00070000000000000004000000}
+            TextSettings.FontColor = claRed
+            TextSettings.HorzAlign = Center
+            Text = 
+              'Do not pay to your own LN Address.'#13#10'Remember that LN uses Satosh' +
+              'is'
+            TabOrder = 4
+            TabStop = False
+          end
+          object Label33: TLabel
+            AutoSize = True
+            Cursor = crHelp
+            HitTest = True
+            Position.X = 8.000000000000000000
+            Position.Y = 61.000000000000000000
+            Size.Width = 69.000000000000000000
+            Size.Height = 16.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.WordWrap = False
+            Text = 'LN Address *'
+            TabOrder = 41
+            TabStop = False
+            OnClick = lblGetInvoiceClick
+          end
+          object edtPayLnAddressAddress: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            TabOrder = 0
+            Position.X = 85.000000000000000000
+            Position.Y = 58.000000000000000000
+            Size.Width = 193.000000000000000000
+            Size.Height = 22.000000000000000000
+            Size.PlatformDefault = False
+            OnTyping = edtExportedTokenTyping
+          end
+          object Label34: TLabel
+            AutoSize = True
+            Cursor = crHelp
+            HitTest = True
+            Position.X = 8.000000000000000000
+            Position.Y = 91.000000000000000000
+            Size.Width = 52.000000000000000000
+            Size.Height = 16.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.WordWrap = False
+            Text = 'Amount *'
+            TabOrder = 39
+            TabStop = False
+            OnClick = lblGetInvoiceClick
+          end
+          object edtPayLnAddressAmount: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            TabOrder = 1
+            FilterChar = '0123456789'
+            Text = '1'
+            TextSettings.HorzAlign = Center
+            Position.X = 85.000000000000000000
+            Position.Y = 88.000000000000000000
+            Size.Width = 85.000000000000000000
+            Size.Height = 22.000000000000000000
+            Size.PlatformDefault = False
+            OnTyping = edtExportedTokenTyping
+          end
+          object btnPayLnAddress: TButton
+            Position.X = 178.000000000000000000
+            Position.Y = 88.000000000000000000
+            Size.Width = 100.000000000000000000
+            Size.Height = 22.000000000000000000
+            Size.PlatformDefault = False
+            TabOrder = 44
+            TabStop = False
+            Text = 'Pay'
+            TextSettings.Trimming = None
+            OnClick = btnPayLnAddressClick
+          end
+          object Label35: TLabel
+            AutoSize = True
+            Cursor = crHelp
+            HitTest = True
+            Position.X = 10.000000000000000000
+            Position.Y = 120.000000000000000000
+            Size.Width = 45.000000000000000000
+            Size.Height = 16.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.WordWrap = False
+            Text = 'Max Fee'
+            TabOrder = 40
+            TabStop = False
+            OnClick = lblGetInvoiceClick
+          end
+          object edtPayLnAmountMaxFee: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            TabOrder = 3
+            FilterChar = '0123456789'
+            Text = '0'
+            TextSettings.HorzAlign = Center
+            Position.X = 85.000000000000000000
+            Position.Y = 118.000000000000000000
+            Size.Width = 85.000000000000000000
+            Size.Height = 22.000000000000000000
+            Size.PlatformDefault = False
+            OnTyping = edtExportedTokenTyping
+          end
+          object Label36: TLabel
+            AutoSize = True
+            Cursor = crHandPoint
+            StyledSettings = [Family]
+            HitTest = True
+            Margins.Left = 10.000000000000000000
+            Margins.Top = 15.000000000000000000
+            Margins.Right = 10.000000000000000000
+            Margins.Bottom = 10.000000000000000000
+            Position.X = 178.000000000000000000
+            Position.Y = 120.000000000000000000
+            Size.Width = 31.000000000000000000
+            Size.Height = 15.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.Font.Size = 11.000000000000000000
+            TextSettings.Font.StyleExt = {00070000000000000004000000}
+            TextSettings.FontColor = claRed
+            TextSettings.HorzAlign = Center
+            TextSettings.WordWrap = False
+            Text = 'Erros?'
+            TabOrder = 2
+            TabStop = False
+            OnClick = Label17Click
           end
         end
       end

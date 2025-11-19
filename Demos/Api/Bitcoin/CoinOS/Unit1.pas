@@ -39,7 +39,7 @@ type
     Label7: TLabel;
     Label10: TLabel;
     Label11: TLabel;
-    gbxLnInvoicePay: TGroupBox;
+    gbxPayLnInvoice: TGroupBox;
     Label12: TLabel;
     Label14: TLabel;
     edtPayInvoice: TEdit;
@@ -102,6 +102,16 @@ type
     btnPrivateDataShowHide: TButton;
     chkTokenRo: TCheckBox;
     lytTokenRoInfo: TLayout;
+    gbxPayLnAddress: TGroupBox;
+    Label32: TLabel;
+    Label33: TLabel;
+    edtPayLnAddressAddress: TEdit;
+    Label34: TLabel;
+    edtPayLnAddressAmount: TEdit;
+    btnPayLnAddress: TButton;
+    Label35: TLabel;
+    edtPayLnAmountMaxFee: TEdit;
+    Label36: TLabel;
     procedure Label1Click(Sender: TObject);
     procedure btnInvoiceLNCreateClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -124,6 +134,7 @@ type
     procedure btnPrivateDataShowHideClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnGetPaymentsClick(Sender: TObject);
+    procedure btnPayLnAddressClick(Sender: TObject);
   private
     const
     CConfigFileName = 'config.json';
@@ -329,6 +340,25 @@ begin
   end;
 end;
 
+procedure TForm1.btnPayLnAddressClick(Sender: TObject);
+begin
+  var
+  LMaxFee := StrToInt(edtPayLnAmountMaxFee.Text);
+  var
+  LAmount := StrToInt(edtPayLnAddressAmount.Text);
+  var
+  LApiCoinOS := TAPICoinOS.Create;
+  try
+    LApiCoinOS.AuthToken(edtExportedToken.Text);
+    var
+    LResult := LApiCoinOS.PostPaymentLnAddress(edtPayLnAddressAddress.Text, LAmount, LMaxFee);
+    AddListBox(LResult);
+    AddLog(LResult);
+  finally
+    LApiCoinOS.Free;
+  end;
+end;
+
 procedure TForm1.btnPostUserClick(Sender: TObject);
 begin
   // Check changes
@@ -485,7 +515,6 @@ begin
     LApiCoinOS.AuthToken(edtExportedToken.Text);
     LResult := LApiCoinOS.GetRo;
     edtTokenRo.Text := LResult;
-
   finally
     LApiCoinOS.Free;
   end;

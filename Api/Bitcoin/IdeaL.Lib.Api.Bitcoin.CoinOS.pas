@@ -51,7 +51,7 @@ type
 {$ENDIF}
 
     function Post(AUrl, ABody: string): string;
-    function Get(AUrl: string): string;
+    function Get(AUrl: string; AHeaders: TNetHeaders = []): string; overload;
     { protected declarations }
   public
     const
@@ -119,12 +119,19 @@ type
     /// <summary> Send a lightning payment
     /// </summary>
     function PostPayment(AInvoice: string; AMaxFee: Integer = 0): string;
-    /// <summary> Send an internal payment to another user
+    /// <summary> Send an internal payment to another CoinOS user
     /// </summary>
     function PostPaymentToUser(AAmount: Integer; AUserName: string): string;
     /// <summary> Send a bitcoin payment
     /// </summary>
     function PostBitcoinSend(AAmount: Integer; AAddress: string): string;
+    /// <summary> Send paymento to a LNAddress
+    /// </summary>
+    /// <param name="AAddress"> LN Address, LNURL-Pay (LUD-06) username@domain.tld
+    /// </param>
+    /// <param name="AAmount"> Amount sent in satoshis
+    /// </param>
+    function PostPaymentLnAddress(AAddress: string; AAmount: Integer; AMaxFee: Integer = 0): string;
 
     /// <summary> Request Token to access ONLY "Create Invoice" and "Payment History"
     /// </summary>
@@ -213,34 +220,8 @@ begin
 {$ENDIF}
 end;
 
-function TAPICoinOS.Get(AUrl: string): string;
-{$IFDEF FPC}
-var
-  LHttpClient: TFPHttpClient;
-  LResponse : TStringList;
-{$ELSE}
-var
-  LHttp: THTTPClient;
-  LResponse: IHTTPResponse;
-{$ENDIF}
+function TAPICoinOS.Get(AUrl: string; AHeaders: TNetHeaders): string;
 begin
-{$IFDEF FPC}
-  InitSSLInterface;
-  GetNetHttpRequestLocal(LHttpClient);
-  try
-    LResponse := TStringList.Create;
-    try
-      LHttpClient.Get(AUrl, LResponse);
-      if LHttpClient.ResponseStatusCode <> 200 then
-        raise exception.create(LHttpClient.ResponseStatusText);
-      Result := LResponse.Text;
-    finally
-      LResponse.Free;
-    end;
-  finally
-    LHttpClient.Free;
-  end;
-{$ELSE}
   var
   LHeader: TNetHeaders;
   LHeader :=
@@ -248,19 +229,9 @@ begin
       TNameValuePair.Create('Authorization', 'Bearer ' + FAuthToken),
       TNameValuePair.Create('Content-Type', 'application/json; charset=utf-8'),
       TNameValuePair.Create('Accept', '*/*')
-    ];
+    ] + AHeaders;
 
-  LHttp := THTTPClient.Create;
-  try
-    LResponse := LHttp.Get(AUrl, nil, LHeader);
-  finally
-    FreeAndNil(LHttp);
-  end;
-
-  if LResponse.StatusCode <> 200 then
-    raise Exception.Create(LResponse.StatusCode.ToString + ' ' + LResponse.StatusText);
-  Result := LResponse.ContentAsString(TEncoding.UTF8);
-{$ENDIF}
+  Result := inherited Get(AUrl, LHeader);
 end;
 
 function TAPICoinOS.GetCredits: string;
@@ -283,6 +254,7 @@ var
   LUrl: string;
 begin
   LUrl := Format('%s/me', [CUrlApi]);
+
   Result := Get(LUrl);
 end;
 
@@ -384,36 +356,7 @@ begin
 end;
 
 function TAPICoinOS.Post(AUrl, ABody: string): string;
-{$IFDEF FPC}
-var
-  LHttpClient: TFPHttpClient;
-  LResponse : TStringList;
-{$ELSE}
-var
-  LHttp: THTTPClient;
-  LResponse: IHTTPResponse;
-{$ENDIF}
 begin
-{$IFDEF FPC}
-  InitSSLInterface;
-  GetNetHttpRequestLocal(LHttpClient);
-  try
-    LResponse := TStringList.Create;
-    LHttpClient.RequestBody := TRawByteStringStream.Create(ABody);
-    try
-      LHttpClient.ConnectTimeout := 30000;
-      LHttpClient.Post(AUrl, LResponse);
-      if LHttpClient.ResponseStatusCode <> 200 then
-        raise exception.create(LHttpClient.ResponseStatusText);
-      Result := LResponse.Text;
-    finally
-      LHttpClient.RequestBody.Free;
-      LResponse.Free;
-    end;
-  finally
-    LHttpClient.Free;
-  end;
-{$ELSE}
   var
   LHeader: TNetHeaders;
   LHeader :=
@@ -423,32 +366,7 @@ begin
       TNameValuePair.Create('Accept', '*/*')
     ];
 
-  LHttp := THTTPClient.Create;
-  var
-  LStrm := TStringStream.Create(ABody, TEncoding.UTF8, False);
-  try
-    LStrm.Position := 0;
-    LResponse := LHttp.Post(AUrl, LStrm, nil, LHeader);
-  finally
-    LStrm.Free;
-    FreeAndNil(LHttp);
-  end;
-
-  if LResponse.StatusCode <> 200 then
-  begin
-    var
-    LMsg := EmptyStr;
-    try
-      LMsg := LResponse.ContentAsString(TEncoding.UTF8);
-      if not LMsg.Trim.IsEmpty then
-        LMsg := ' - ' + LMsg;
-    except
-
-    end;
-    raise Exception.Create(LResponse.StatusCode.ToString + ' ' + LResponse.StatusText + LMsg);
-  end;
-  Result := LResponse.ContentAsString(TEncoding.UTF8);
-{$ENDIF}
+  Result := inherited Post(AUrl, ABody, LHeader);
 end;
 
 function TAPICoinOS.PostBitcoinSend(AAmount: Integer; AAddress: string): string;
@@ -608,6 +526,16 @@ begin
   end;
 {$ENDIF}
   Result := Post(LUrl, LBody);
+end;
+
+function TAPICoinOS.PostPaymentLnAddress(AAddress: string;
+  AAmount, AMaxFee: Integer): string;
+var
+  LUrl: string;
+begin
+  LUrl := Format('%s/%s/%s/%d', [CUrlApi, 'send', AAddress, AAmount]);
+
+  Result := Post(LUrl, '{"fee":' + AMaxFee.ToString + '}');
 end;
 
 function TAPICoinOS.PostPaymentToUser(AAmount: Integer;
