@@ -89,11 +89,11 @@ object Form1: TForm1
       Size.PlatformDefault = False
       TabOrder = 6
       Viewport.Width = 856.000000000000000000
-      Viewport.Height = 158.000000000000000000
+      Viewport.Height = 142.000000000000000000
       object gbxDePIXCreate: TGroupBox
         Align = Left
         Size.Width = 329.000000000000000000
-        Size.Height = 158.000000000000000000
+        Size.Height = 142.000000000000000000
         Size.PlatformDefault = False
         Text = 'Create DePIX QRCode   '
         TabOrder = 0
@@ -226,15 +226,104 @@ object Form1: TForm1
           Text = 'Ligthning'
         end
       end
-      object GroupBox1: TGroupBox
+      object gbxDepositList: TGroupBox
+        Align = Left
+        Position.X = 585.000000000000000000
+        Size.Width = 296.000000000000000000
+        Size.Height = 142.000000000000000000
+        Size.PlatformDefault = False
+        Text = 'Deposit List   '
+        TabOrder = 2
+        object Label7: TLabel
+          AutoSize = True
+          Cursor = crHelp
+          HitTest = True
+          Position.X = 8.000000000000000000
+          Position.Y = 42.000000000000000000
+          Size.Width = 25.000000000000000000
+          Size.Height = 16.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.WordWrap = False
+          Text = 'Start'
+          TabOrder = 40
+          TabStop = False
+        end
+        object btnGetDepositsList: TButton
+          Position.X = 49.000000000000000000
+          Position.Y = 96.000000000000000000
+          Size.Width = 100.000000000000000000
+          Size.Height = 22.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 41
+          TabStop = False
+          Text = 'Get'
+          TextSettings.Trimming = None
+          OnClick = btnGetDepositsListClick
+        end
+        object dedtStart: TDateEdit
+          Date = 45943.000000000000000000
+          Position.X = 49.000000000000000000
+          Position.Y = 36.000000000000000000
+          TabOrder = 0
+        end
+        object Label11: TLabel
+          AutoSize = True
+          Cursor = crHelp
+          HitTest = True
+          Position.X = 157.000000000000000000
+          Position.Y = 42.000000000000000000
+          Size.Width = 20.000000000000000000
+          Size.Height = 16.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.WordWrap = False
+          Text = 'End'
+          TabOrder = 38
+          TabStop = False
+        end
+        object dedtEnd: TDateEdit
+          Date = 45943.000000000000000000
+          Position.X = 185.000000000000000000
+          Position.Y = 36.000000000000000000
+          TabOrder = 1
+        end
+        object cbxStatus: TComboBox
+          Items.Strings = (
+            ''
+            'canceled'
+            'depix_sent'
+            'error'
+            'expired'
+            'pending'
+            'refunded'
+            'under_review')
+          Position.X = 49.000000000000000000
+          Position.Y = 66.000000000000000000
+          TabOrder = 2
+        end
+        object Label12: TLabel
+          AutoSize = True
+          Cursor = crHelp
+          HitTest = True
+          Position.X = 8.000000000000000000
+          Position.Y = 72.000000000000000000
+          Size.Width = 33.000000000000000000
+          Size.Height = 16.000000000000000000
+          Size.PlatformDefault = False
+          TextSettings.WordWrap = False
+          Text = 'Status'
+          TabOrder = 39
+          TabStop = False
+        end
+      end
+      object bgxDepositStatus: TGroupBox
         Align = Left
         Position.X = 329.000000000000000000
         Size.Width = 256.000000000000000000
-        Size.Height = 158.000000000000000000
+        Size.Height = 142.000000000000000000
         Size.PlatformDefault = False
         Text = 'Deposit Status   '
         TabOrder = 1
-        object Label7: TLabel
+        object Label10: TLabel
           AutoSize = True
           Cursor = crHelp
           HitTest = True
@@ -248,10 +337,9 @@ object Form1: TForm1
           TabOrder = 38
           TabStop = False
         end
-        object Edit1: TEdit
+        object edtDepositStatus: TEdit
           Touch.InteractiveGestures = [LongTap, DoubleTap]
           TabOrder = 0
-          FilterChar = '0123456789.'
           Position.X = 35.000000000000000000
           Position.Y = 36.000000000000000000
           Size.Width = 208.000000000000000000
@@ -259,7 +347,7 @@ object Form1: TForm1
           Size.PlatformDefault = False
           OnTyping = edtExportedTokenTyping
         end
-        object Button1: TButton
+        object btnGetDepositStatus: TButton
           Position.X = 35.000000000000000000
           Position.Y = 66.000000000000000000
           Size.Width = 100.000000000000000000
@@ -269,7 +357,7 @@ object Form1: TForm1
           TabStop = False
           Text = 'Get'
           TextSettings.Trimming = None
-          OnClick = btnDePIXCreateClick
+          OnClick = btnGetDepositStatusClick
         end
       end
     end

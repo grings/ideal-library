@@ -78,7 +78,8 @@ type
     /// <param name="AStatus"> A status to filter by.
     // Allowed values: pending, depix_sent, under_review, canceled, error, refunded, expired
     /// </param>
-    function GetDeposits(AStart, AEnd, AStatus: string): string;
+    function GetDeposits(AStart, AEnd, AStatus: string): string; overload;
+    function GetDeposits(AStart, AEnd: TDate; AStatus: string): string; overload;
 
     /// <summary> The system generates a dynamic QR code designed for deposits
     /// in Reais (BRL) through the PIX banking system
@@ -214,7 +215,18 @@ begin
   end;
 
   if (LResponse.StatusCode < 200) or (LResponse.StatusCode > 299) then
-    raise Exception.Create(LResponse.StatusCode.ToString + ' ' + LResponse.StatusText);
+  begin
+    var
+    LMsg := EmptyStr;
+    try
+      LMsg := LResponse.ContentAsString(TEncoding.UTF8);
+      if not LMsg.Trim.IsEmpty then
+        LMsg := ' - ' + LMsg;
+    except
+
+    end;
+    raise Exception.Create(LResponse.StatusCode.ToString + ' ' + LResponse.StatusText + LMsg);
+  end;
   Result := LResponse.ContentAsString(TEncoding.UTF8);
 {$ENDIF}
 end;
@@ -227,6 +239,15 @@ begin
   if not AStatus.Trim.IsEmpty then
     LUrl := LUrl + '&status=' + AStatus;
   Result := Get(LUrl);
+end;
+
+function TAPIDePix.GetDeposits(AStart, AEnd: TDate; AStatus: string): string;
+begin
+  var
+  LStart := FormatDateTime('yyyy-mm-dd', AStart);
+  var
+  LEnd := FormatDateTime('yyyy-mm-dd', AEnd);
+  Result := GetDeposits(LStart, LEnd, AStatus);
 end;
 
 function TAPIDePix.GetDepositStatus(AId: string): string;

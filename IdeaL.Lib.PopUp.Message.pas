@@ -339,6 +339,8 @@ begin
   // Foces to resize the items
   TThread.CreateAnonymousThread(
     procedure
+    var
+      i: Integer;
     begin
       TThread.Synchronize(nil,
         procedure
@@ -352,16 +354,19 @@ begin
           end;
           OnPainting := DoOnPainting;
         end);
-      TThread.Sleep(50);
-      TThread.Synchronize(nil,
-        procedure
-        begin
-          if not Trim(Name).IsEmpty then
-            Height := Height + 2;
-          var
-          LHeight := Height;
-          DoResize;
-        end);
+      for I := 0 to 1 do
+      begin
+        TThread.Sleep(25);
+        TThread.ForceQueue(nil,
+          procedure
+          begin
+            if not Trim(Name).IsEmpty then
+              Height := Height + 2;
+            var
+            LHeight := Height;
+            DoResize;
+          end);
+      end;
     end).Start;
 end;
 

@@ -6,7 +6,7 @@ uses
   System.SysUtils, System.Types, System.UITypes, System.Classes, System.Variants,
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs, FMX.StdCtrls,
   FMX.Edit, FMX.Layouts, FMX.Controls.Presentation, FMX.Memo.Types,
-  FMX.ScrollBox, FMX.Memo, FMX.ListBox, FMX.Objects;
+  FMX.ScrollBox, FMX.Memo, FMX.ListBox, FMX.Objects, FMX.DateTimeCtrls;
 
 type
   TForm1 = class(TForm)
@@ -44,10 +44,18 @@ type
     edtSplitFee: TEdit;
     Label4: TLabel;
     cbxIsLightning: TCheckBox;
-    GroupBox1: TGroupBox;
+    gbxDepositList: TGroupBox;
     Label7: TLabel;
-    Edit1: TEdit;
-    Button1: TButton;
+    btnGetDepositsList: TButton;
+    bgxDepositStatus: TGroupBox;
+    Label10: TLabel;
+    edtDepositStatus: TEdit;
+    btnGetDepositStatus: TButton;
+    dedtStart: TDateEdit;
+    Label11: TLabel;
+    dedtEnd: TDateEdit;
+    cbxStatus: TComboBox;
+    Label12: TLabel;
     procedure btnPrivateDataShowHideClick(Sender: TObject);
     procedure edtExportedTokenTyping(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -57,6 +65,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure btnQrCodeFromInvoiceClick(Sender: TObject);
     procedure rctQrCodePicBackgroundClick(Sender: TObject);
+    procedure btnGetDepositsListClick(Sender: TObject);
+    procedure btnGetDepositStatusClick(Sender: TObject);
   private
     const
     CConfigFileName = 'config.json';
@@ -64,7 +74,7 @@ type
     procedure SaveData;
     procedure LoadData;
 
-    procedure AddListBox(AJson: string);
+    procedure AddListBox(ATitle, AJson: string);
     procedure AddLog(ALog: string);
 
     procedure QrCodePicHide;
@@ -80,6 +90,7 @@ var
 implementation
 
 uses
+  System.DateUtils,
   System.JSON,
   System.IOUtils,
 
@@ -93,24 +104,24 @@ uses
 
 {$R *.fmx}
 
-procedure TForm1.AddListBox(AJson: string);
+procedure TForm1.AddListBox(ATitle, AJson: string);
 begin
-  lbxJson.Items.Insert(0, AJson);
+  var
+  lbItem := TListBoxItem.Create(lbxJson);
+  lbItem.Parent := lbxJson;
+  lbItem.Text := FormatDateTime('hh:mm:ss.zzz', Now) + ' ' + ATitle;
+  lbItem.TagString := AJson;
+
+  AddLog(lbItem.Text + sLineBreak + AJson);
 end;
 
 procedure TForm1.AddLog(ALog: string);
 begin
-  ALog := DateTimeToStr(Now) + ' - ' + ALog;
-  Memo1.Lines.Insert(0, ALog);
+  Memo1.Lines.Text := ALog;
 end;
 
 procedure TForm1.btnDePIXCreateClick(Sender: TObject);
 begin
-  {
-  ONLY FOR TESTING !!!!!!
-  Don't you have a WebHook? Please, use a public one on: https://webhook.site/
-  }
-
   var
   LAPI := TAPIDePix.Create;
   try
@@ -124,8 +135,35 @@ begin
       edtSplitAddress.Text,
       edtSplitFee.Text,
       cbxIsLightning.IsChecked);
-    AddListBox(LResult);
-    AddLog(LResult);
+    AddListBox('Create', LResult);
+  finally
+    LAPI.Free;
+  end;
+end;
+
+procedure TForm1.btnGetDepositsListClick(Sender: TObject);
+begin
+  var
+  LAPI := TAPIDePix.Create;
+  try
+    LAPI.AuthToken(edtExportedToken.Text);
+    var
+    LResult := LAPI.GetDeposits(dedtStart.Date, dedtEnd.Date, cbxStatus.Text);
+    AddListBox('List', LResult);
+  finally
+    LAPI.Free;
+  end;
+end;
+
+procedure TForm1.btnGetDepositStatusClick(Sender: TObject);
+begin
+  var
+  LAPI := TAPIDePix.Create;
+  try
+    LAPI.AuthToken(edtExportedToken.Text);
+    var
+    LResult := LAPI.GetDepositStatus(edtDepositStatus.Text);
+    AddListBox('Status', LResult);
   finally
     LAPI.Free;
   end;
@@ -186,6 +224,8 @@ end;
 procedure TForm1.FormCreate(Sender: TObject);
 begin
   FormatSettings.DecimalSeparator := '.';
+  dedtStart.Date := IncYear(Now, -1);
+  dedtEnd.Date := IncDay(Now, 1);
 end;
 
 procedure TForm1.FormShow(Sender: TObject);
@@ -198,9 +238,13 @@ procedure TForm1.lbxJsonItemClick(const Sender: TCustomListBox;
   const Item: TListBoxItem);
 begin
   var
-  LJson := TJSONObject.ParseJSONValue(Item.Text);
+  LJson := TJSONObject.ParseJSONValue(Item.TagString);
   try
     memBeautyJson.Lines.Text := TJSON.Format(LJson);
+    AddLog(
+     Item.Text + sLineBreak +
+     Item.TagString
+     );
   finally
     FreeAndNil(LJson);
   end;
