@@ -28,6 +28,7 @@ type
   protected
     { protected declarations }
   public
+    constructor Create; virtual;
 {$IFDEF FPC}
     class procedure GetHttpRequest(
           out AHttpClient: TFPHttpClient;
@@ -149,6 +150,11 @@ begin
 end;
 
 {$ENDIF}
+
+constructor TIdeaLApi.Create;
+begin
+
+end;
 
 function TIdeaLApi.Get(AUrl: string; AHeaders: TNetHeaders): string;
 {$IFDEF FPC}

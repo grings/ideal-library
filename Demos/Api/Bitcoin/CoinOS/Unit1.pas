@@ -112,6 +112,9 @@ type
     Label35: TLabel;
     edtPayLnAmountMaxFee: TEdit;
     Label36: TLabel;
+    Layout1: TLayout;
+    Label37: TLabel;
+    edtXApiKey: TEdit;
     procedure Label1Click(Sender: TObject);
     procedure btnInvoiceLNCreateClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -410,6 +413,7 @@ begin
   LBool := not edtPassword.Password;
   edtPassword.Password := LBool;
   edtExportedToken.Password := LBool;
+  edtXApiKey.Password := LBool;
   edtTokenRo.Password := LBool;
 end;
 
@@ -493,7 +497,10 @@ begin
   LApiCoinOS := TAPICoinOS.Create;
   try    
     var
-    LResult := LApiCoinOS.PostLogin(edtUsername.Text, edtPassword.Text);
+    LResult :=
+      LApiCoinOS
+      .HeaderArray([TAPICoinOS.THeaderPair.Create('x-api-key', edtXApiKey.Text)])
+      .PostLogin(edtUsername.Text, edtPassword.Text);
     var
     LJSONObj := TJSONObject.ParseJSONValue(LResult) as TJSONObject;
     // edtExportedToken.OnTyping := False;
@@ -597,6 +604,8 @@ begin
       edtPassword.Text := LStr;
     if LJSONObj.TryGetValue<string>('exportedToken', LStr) then
       edtExportedToken.Text := LStr;
+    if LJSONObj.TryGetValue<string>('xapikey', LStr) then
+      edtXApiKey.Text := LStr;
     if LJSONObj.TryGetValue<string>('roToken', LStr) then
       edtTokenRo.Text := LStr;
   finally
@@ -628,6 +637,7 @@ begin
     LJSONObj.AddPair('username', edtUsername.Text);
     LJSONObj.AddPair('password', edtPassword.Text);
     LJSONObj.AddPair('exportedToken', edtExportedToken.Text);
+    LJSONObj.AddPair('xapikey', edtXApiKey.Text);
     LJSONObj.AddPair('roToken', edtTokenRo.Text);
     TFile.WriteAllText(CConfigFileName, LJSONObj.ToString);
   finally

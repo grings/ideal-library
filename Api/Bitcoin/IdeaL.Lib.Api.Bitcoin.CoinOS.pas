@@ -1,5 +1,9 @@
 unit IdeaL.Lib.Api.Bitcoin.CoinOS;
 
+{$IFDEF FPC}
+{$mode objfpc}{$H+}{$modeswitch advancedrecords}
+{$ENDIF}
+
 interface
 
 uses
@@ -34,8 +38,19 @@ type
   { TAPICoinOS }
 
   TAPICoinOS = class(TIdeaLApi)
+  public
+    type
+    THeaderPair = record
+      Key: string;
+      Value: string;
+      class function Create(AKey, AValue: string): THeaderPair; static;
+    end;
+
+    THeaderArray = array of THeaderPair;
+    { public declarations }
   private
     FAuthToken: string;
+    FHeaderArray: THeaderArray;
     { private declarations }
   protected
 {$IFDEF FPC}
@@ -58,9 +73,16 @@ type
     CUrlApi = 'https://coinos.io/api';
     { public declarations }
   public
+    constructor Create; override;
 
     function AuthToken(AValue: string): TAPICoinOS; overload;
     function AuthToken: string; overload;
+
+    /// <summary> To add extra headers in case of necessary, e.g.: x-api-key
+    /// x-api-key is used on POST LOGIN and, is a Captcha Skip Value you must ask CoinOS team your self for it.
+    /// </summary>
+    function HeaderArray(AValue: THeaderArray): TAPICoinOS; overload;
+    function HeaderArray: THeaderArray; overload;
 
     function GetMe: string;
     function GetCredits: string;
@@ -158,6 +180,12 @@ begin
   Result := FAuthToken;
 end;
 
+constructor TAPICoinOS.Create;
+begin
+  inherited;
+  SetLength(FHeaderArray, 0);
+end;
+
 function TAPICoinOS.GetRates: string;
 var
   LUrl: string;
@@ -218,6 +246,17 @@ begin
     raise Exception.Create(LResponse.StatusCode.ToString + ' ' + LResponse.StatusText);
   Result := LResponse.ContentAsString(TEncoding.UTF8);
 {$ENDIF}
+end;
+
+function TAPICoinOS.HeaderArray: THeaderArray;
+begin
+  Result := FHeaderArray;
+end;
+
+function TAPICoinOS.HeaderArray(AValue: THeaderArray): TAPICoinOS;
+begin
+  Result := Self;
+  FHeaderArray := AValue;
 end;
 
 function TAPICoinOS.Get(AUrl: string; AHeaders: TNetHeaders): string;
@@ -356,6 +395,8 @@ begin
 end;
 
 function TAPICoinOS.Post(AUrl, ABody: string): string;
+var
+  LHeaderPair: THeaderPair;
 begin
   var
   LHeader: TNetHeaders;
@@ -365,6 +406,17 @@ begin
       TNameValuePair.Create('Content-Type', 'application/json; charset=utf-8'),
       TNameValuePair.Create('Accept', '*/*')
     ];
+  if Length(FHeaderArray) > 0 then
+  begin
+    var
+    LLenght := Length(LHeader);
+    SetLength(LHeader, LLenght + Length(FHeaderArray));
+    for LHeaderPair in FHeaderArray do
+    begin
+      LHeader[LLenght] := TNameValuePair.Create(LHeaderPair.Key, LHeaderPair.Value);
+      Inc(LLenght);
+    end;
+  end;
 
   Result := inherited Post(AUrl, ABody, LHeader);
 end;
@@ -620,6 +672,14 @@ function TAPICoinOS.AuthToken(AValue: string): TAPICoinOS;
 begin
   Result := Self;
   FAuthToken := AValue;
+end;
+
+{ TAPICoinOS.THeaderPair }
+
+class function TAPICoinOS.THeaderPair.Create(AKey, AValue: string): THeaderPair;
+begin
+  Result.Key := AKey;
+  Result.Value := AValue;
 end;
 
 end.

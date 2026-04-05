@@ -45,12 +45,12 @@ object Form1: TForm1
         ReadOnly = True
         Align = Client
         Size.Width = 683.000000000000000000
-        Size.Height = 114.000000000000000000
+        Size.Height = 91.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 1
         TabStop = False
         Viewport.Width = 679.000000000000000000
-        Viewport.Height = 110.000000000000000000
+        Viewport.Height = 87.000000000000000000
       end
       object Layout3: TLayout
         Align = Top
@@ -159,9 +159,9 @@ object Form1: TForm1
       end
       object lbxJson: TListBox
         Align = Left
-        Position.Y = 371.000000000000000000
+        Position.Y = 394.000000000000000000
         Size.Width = 200.000000000000000000
-        Size.Height = 114.000000000000000000
+        Size.Height = 91.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 2
         DisableFocusEffect = True
@@ -170,7 +170,7 @@ object Form1: TForm1
         DefaultItemStyles.GroupFooterStyle = ''
         OnItemClick = lbxJsonItemClick
         Viewport.Width = 196.000000000000000000
-        Viewport.Height = 110.000000000000000000
+        Viewport.Height = 87.000000000000000000
       end
       object lytBeutyJson: TLayout
         Align = MostRight
@@ -225,7 +225,7 @@ object Form1: TForm1
       end
       object HorzScrollBox1: THorzScrollBox
         Align = Top
-        Position.Y = 206.000000000000000000
+        Position.Y = 229.000000000000000000
         Size.Width = 883.000000000000000000
         Size.Height = 165.000000000000000000
         Size.PlatformDefault = False
@@ -520,7 +520,7 @@ object Form1: TForm1
             Size.PlatformDefault = False
             TextSettings.WordWrap = False
             Text = 'Username'
-            TabOrder = 37
+            TabOrder = 38
             TabStop = False
           end
           object edtProfileUsername: TEdit
@@ -539,7 +539,7 @@ object Form1: TForm1
             TextSettings.HorzAlign = Trailing
             TextSettings.WordWrap = False
             Text = 'Balance:'
-            TabOrder = 38
+            TabOrder = 39
             TabStop = False
           end
           object lblProfileBalanceSatoshi: TLabel
@@ -551,7 +551,7 @@ object Form1: TForm1
             TextSettings.HorzAlign = Trailing
             TextSettings.WordWrap = False
             Text = 'Balance in sats'
-            TabOrder = 39
+            TabOrder = 40
             TabStop = False
           end
           object Label22: TLabel
@@ -563,7 +563,7 @@ object Form1: TForm1
             Size.PlatformDefault = False
             TextSettings.WordWrap = False
             Text = 'Currency'
-            TabOrder = 42
+            TabOrder = 43
             TabStop = False
           end
           object cbxProfileCurrency: TComboBox
@@ -587,7 +587,7 @@ object Form1: TForm1
             Size.PlatformDefault = False
             TextSettings.WordWrap = False
             Text = 'Photo URL'
-            TabOrder = 44
+            TabOrder = 45
             TabStop = False
           end
           object edtProfilePictureUrl: TEdit
@@ -608,7 +608,7 @@ object Form1: TForm1
             TextSettings.HorzAlign = Trailing
             TextSettings.WordWrap = False
             Text = 'Balance in fiat'
-            TabOrder = 43
+            TabOrder = 44
             TabStop = False
           end
           object btnPostUser: TButton
@@ -665,7 +665,7 @@ object Form1: TForm1
             Size.PlatformDefault = False
             TextSettings.WordWrap = False
             Text = 'From'
-            TabOrder = 38
+            TabOrder = 37
             TabStop = False
             OnClick = lblGetInvoiceClick
           end
@@ -673,13 +673,13 @@ object Form1: TForm1
             Date = 45675.000000000000000000
             Position.X = 44.000000000000000000
             Position.Y = 46.000000000000000000
-            TabOrder = 43
+            TabOrder = 42
           end
           object dedtPaymentsTo: TDateEdit
             Date = 45675.000000000000000000
             Position.X = 172.000000000000000000
             Position.Y = 46.000000000000000000
-            TabOrder = 41
+            TabOrder = 40
           end
           object Label25: TLabel
             AutoSize = True
@@ -705,7 +705,7 @@ object Form1: TForm1
             Size.PlatformDefault = False
             TextSettings.WordWrap = False
             Text = 'Limit'
-            TabOrder = 48
+            TabOrder = 47
             TabStop = False
           end
           object edtPaymentsLimit: TEdit
@@ -735,7 +735,7 @@ object Form1: TForm1
             Size.PlatformDefault = False
             TextSettings.WordWrap = False
             Text = 'Offset'
-            TabOrder = 47
+            TabOrder = 46
             TabStop = False
           end
           object btnGetPayments: TButton
@@ -744,7 +744,7 @@ object Form1: TForm1
             Size.Width = 100.000000000000000000
             Size.Height = 22.000000000000000000
             Size.PlatformDefault = False
-            TabOrder = 42
+            TabOrder = 41
             TabStop = False
             Text = 'Get'
             TextSettings.Trimming = None
@@ -794,7 +794,7 @@ object Form1: TForm1
             Size.PlatformDefault = False
             TextSettings.WordWrap = False
             Text = 'LN Address *'
-            TabOrder = 41
+            TabOrder = 39
             TabStop = False
             OnClick = lblGetInvoiceClick
           end
@@ -819,7 +819,7 @@ object Form1: TForm1
             Size.PlatformDefault = False
             TextSettings.WordWrap = False
             Text = 'Amount *'
-            TabOrder = 39
+            TabOrder = 37
             TabStop = False
             OnClick = lblGetInvoiceClick
           end
@@ -842,7 +842,7 @@ object Form1: TForm1
             Size.Width = 100.000000000000000000
             Size.Height = 22.000000000000000000
             Size.PlatformDefault = False
-            TabOrder = 44
+            TabOrder = 42
             TabStop = False
             Text = 'Pay'
             TextSettings.Trimming = None
@@ -859,7 +859,7 @@ object Form1: TForm1
             Size.PlatformDefault = False
             TextSettings.WordWrap = False
             Text = 'Max Fee'
-            TabOrder = 40
+            TabOrder = 38
             TabStop = False
             OnClick = lblGetInvoiceClick
           end
@@ -908,7 +908,7 @@ object Form1: TForm1
         Margins.Bottom = 5.000000000000000000
         Position.Y = 94.000000000000000000
         Size.Width = 883.000000000000000000
-        Size.Height = 107.000000000000000000
+        Size.Height = 130.000000000000000000
         Size.PlatformDefault = False
         TabOrder = 45
         TabStop = False
@@ -917,7 +917,7 @@ object Form1: TForm1
           Size.Width = 883.000000000000000000
           Size.Height = 25.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 2
+          TabOrder = 3
           TabStop = False
           object Label5: TLabel
             Align = Left
@@ -949,18 +949,18 @@ object Form1: TForm1
           StyledSettings = [Family, Size, FontColor]
           Margins.Left = 10.000000000000000000
           Position.X = 10.000000000000000000
-          Position.Y = 25.000000000000000000
+          Position.Y = 50.000000000000000000
           Size.Width = 873.000000000000000000
           Size.Height = 17.000000000000000000
           Size.PlatformDefault = False
           TextSettings.Font.StyleExt = {00040000000200000004000000}
           Text = 'Exported token has full access to the API'
-          TabOrder = 3
+          TabOrder = 4
           TabStop = False
         end
         object lytTokenRo: TLayout
           Align = Top
-          Position.Y = 42.000000000000000000
+          Position.Y = 67.000000000000000000
           Size.Width = 883.000000000000000000
           Size.Height = 25.000000000000000000
           Size.PlatformDefault = False
@@ -993,11 +993,11 @@ object Form1: TForm1
         end
         object lytTokenRoInfo: TLayout
           Align = Top
-          Position.Y = 67.000000000000000000
+          Position.Y = 92.000000000000000000
           Size.Width = 883.000000000000000000
           Size.Height = 38.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 4
+          TabOrder = 5
           TabStop = False
           object Label31: TLabel
             Align = Top
@@ -1027,6 +1027,38 @@ object Form1: TForm1
             Text = 'Use RO Token'
             ParentShowHint = False
             ShowHint = True
+          end
+        end
+        object Layout1: TLayout
+          Align = Top
+          Position.Y = 25.000000000000000000
+          Size.Width = 883.000000000000000000
+          Size.Height = 25.000000000000000000
+          Size.PlatformDefault = False
+          TabOrder = 2
+          TabStop = False
+          object Label37: TLabel
+            Align = Left
+            Margins.Right = 5.000000000000000000
+            Size.Width = 81.000000000000000000
+            Size.Height = 25.000000000000000000
+            Size.PlatformDefault = False
+            TextSettings.WordWrap = False
+            Text = 'x-api-key'
+            TabOrder = 1
+            TabStop = False
+          end
+          object edtXApiKey: TEdit
+            Touch.InteractiveGestures = [LongTap, DoubleTap]
+            Align = Client
+            TabOrder = 0
+            TabStop = False
+            Password = True
+            Size.Width = 797.000000000000000000
+            Size.Height = 25.000000000000000000
+            Size.PlatformDefault = False
+            OnChange = edtExportedTokenTyping
+            OnTyping = edtExportedTokenTyping
           end
         end
       end
