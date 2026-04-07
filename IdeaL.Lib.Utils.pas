@@ -3620,7 +3620,7 @@ class procedure TUtils.ThrowExceptionCouldNotFindTheResource(AValue: string);
 begin
   if not AValue.Trim.IsEmpty then
     AValue := ': ' + AValue;
-  raise Exception.Create(Format('Daten wurden nicht gefunden%s', [AValue]));
+  raise Exception.Create(Format('Could not find the resource%s', [AValue]));
 end;
 
 class procedure TUtils.ThrowExceptionForbidden;
