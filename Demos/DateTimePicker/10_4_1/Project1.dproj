@@ -120,6 +120,7 @@
         <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
         <Icns_MainIcns>$(BDS)\bin\delphi_PROJECTICNS.icns</Icns_MainIcns>
         <SanitizedProjectName>Project1</SanitizedProjectName>
+		<DCC_Define>FMX;$(DCC_Define)</DCC_Define>
         <OrientationPortrait>true</OrientationPortrait>
         <OrientationPortraitUpsideDown>true</OrientationPortraitUpsideDown>
         <OrientationLandscapeLeft>true</OrientationLandscapeLeft>
