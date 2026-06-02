@@ -28,6 +28,19 @@ type
   /// Check the official documentation
   /// <see cref="https://docs.eulen.app/"/>
   /// </remarks>
+  /// <remarks>
+  /// 2026-06-01 Webhook (receipt of settlement events):
+  ///   - Register a WebHook: only via Eulen's Telegram Bot,
+  ///     command /registerwebhook <deposit|withdraw|med> <url> <secret>
+  ///     (there is not REST endpoint to register a WebHook)
+  ///   - Authentication: Eulen will send 'Authorization: Basic base64(:<secret>)'
+  ///     in every request to your WebHook. Your APP must read this value.
+  ///   - SLA: your APP must reply 200 OK in maximum 15. Eulen runs automatic re-tries.
+  ///   - Idempotence: use bankTxId as deduplication key.
+  ///   - Fallback: If the endpoint was unreachable, use GetDeposits(start, end)
+  ///     to refresh Deposit status
+  /// <see cref="https://docs.eulen.app/-webhook-849106m0"/>
+  /// </remarks>
   TAPIDePix = class(TIdeaLApi)
   private
     FAuthToken: string;
@@ -95,7 +108,10 @@ type
     /// <param name="ASplitFee"> Optional Split Fee (the percentage of
     /// amountInCents that will be splitted and sent to depixSplitAddress)
     /// </param>
-    /// <param name="ASplitFee"> Optional lightning flag
+    /// <param name="ALightning"> Optional lightning boolean flag
+    /// This parameter confirms that the Token must be sent straight to a LN address
+    /// Confirmed on Telegram support channel on 2025-10-12
+    /// Not tested yet...
     /// </param>
     function PostDeposit(AAmountInCents: Integer): string; overload;
     function PostDeposit(
@@ -138,7 +154,7 @@ begin
   AHttpClient.AddHeader('Content-Type', 'application/json');
   AHttpClient.AddHeader('Authorization', 'Bearer ' + FAuthToken);
   if not FXAsync.Trim.IsEmpty then
-    AHttpClient.AddHeader('FXAsync', FXAsync);
+    AHttpClient.AddHeader('X-Async', FXAsync);
   if not FXNonce.Trim.IsEmpty then
     AHttpClient.AddHeader('X-Nonce', FXNonce);
 end;
@@ -180,7 +196,7 @@ begin
     LResponse := TStringList.Create;
     try
       LHttpClient.Get(AUrl, LResponse);
-      if LHttpClient.ResponseStatusCode <> 200 then
+      if (LHttpClient.ResponseStatusCode < 200) or (LHttpClient.ResponseStatusCode > 299) then
         raise exception.create(LHttpClient.ResponseStatusText);
       Result := LResponse.Text;
     finally
@@ -366,6 +382,31 @@ var
   LJsonObject: TJSONObject;
 {$ENDIF}
 begin
+(*
+Example from API Doc (2026-06-01):
+{
+    "amountInCents": 100,
+    "depixAddress": "ex1qhuq5u7udzwskhaz45fy80kdaxjytqd99ju5yfn",
+    "endUserFullName": "Jasmine Lubowitz",
+    "endUserTaxNumber": "22078522238",
+    "depixSplitAddress": "ex1k981pd4bnsqph05gqwuk8kjsk56volzlqzmtnzwn",
+    "splitFee": "2.99%",
+    "delayDepixInHours": 24
+}
+
+amountInCents: integer - Amount in cents - write-only - required - Integer value in cents of reais. For R$ 1,00 for example: the number passed must be 100. >= 1 <= 10000000
+depixAddress: string - write-only - optional - Optional DePix Address
+depixSplitAddress: string - write-only - optional - Optional DePix Split Address
+splitFee: string - write-only - optional - Optional Split Fee (the percentage of amountInCents that will be splitted and sent to depixSplitAddress)
+euid: string - write-only - optional - End user EUID
+endUserFullName: string - write-only - optional - End user full name
+endUserTaxNumber: string - write-only - optional - End user tax number
+whitelist: boolean - write-only - optional - Optional whitelist flag Default: false
+delayDepixInHours: integer - write-only - optional - Optional number of hours to delay the DePix payment (min 1, max 720). If omitted, the payment is processed immediately.
+merchantId: string - optional - EUID of the merchant.
+*)
+
+  // Differ from official Doc, personal decision to limit it from R$1,00+
   if (AAmountInCents < 100) or (AAmountInCents > 10000000) then
     raise Exception.Create('Invalid value [amount]');
 
@@ -377,14 +418,14 @@ begin
     LJsonObject := LJsonData as TJSONObject;
     LJsonObject.Add('amountInCents', AAmountInCents);
     if not ADepixAddress.Trim.IsEmpty then
-      LJSONObj.AddPair('depixAddress', ADepixAddress);
+      LJsonObject.Add('depixAddress', ADepixAddress);
     if (not ADepixSplitAddress.Trim.IsEmpty) and (not ASplitFee.Trim.IsEmpty) then
     begin
-      LJSONObj.AddPair('depixSplitAddress', ADepixSplitAddress);
-      LJSONObj.AddPair('splitFee', FormatFloat('0.00', StrToFloat(ASplitFee)) + '%');
+      LJsonObject.Add('depixSplitAddress', ADepixSplitAddress);
+      LJsonObject.Add('splitFee', FormatFloat('0.00', StrToFloat(ASplitFee)) + '%');
     end;
     if ALightning then
-      LJSONObj.AddPair('lightning', ALightning);
+      LJsonObject.Add('lightning', ALightning);
     LBody := TJSONObject(LJsonData).AsJSON;
   finally
     LJsonData.Free;
