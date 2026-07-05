@@ -41,6 +41,12 @@ type
     Layout2: TLayout;
     btnQrCodePicClose: TButton;
     imgQrCode: TImage;
+    edtDePIXUserTaxNumber: TEdit;
+    Label4: TLabel;
+    gbxQrCodeGetDetails: TGroupBox;
+    btnGetDetails: TButton;
+    edtGetDetailsQrId: TEdit;
+    Label13: TLabel;
     procedure btnPrivateDataShowHideClick(Sender: TObject);
     procedure edtExportedTokenTyping(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -50,6 +56,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure btnQrCodeFromInvoiceClick(Sender: TObject);
     procedure rctQrCodePicBackgroundClick(Sender: TObject);
+    procedure btnGetDetailsClick(Sender: TObject);
   private
     const
     CConfigFileName = 'config.json';
@@ -111,7 +118,28 @@ begin
     var
     LAmount : Currency := StrToFloat(edtDePIXAmount.Text);
     var
-    LResult := LAPIDigPix.PostQrCode(LAmount, edtDePIXCreateWebHook.Text, edtDePIXCreateSecret.Text);
+    LResult := LAPIDigPix.PostQrCode(
+      LAmount,
+      edtDePIXUserTaxNumber.Text,
+      EmptyStr, // PaymentMethod
+      EmptyStr, // Msg
+      edtDePIXCreateWebHook.Text,
+      edtDePIXCreateSecret.Text);
+    AddListBox(LResult);
+    AddLog(LResult);
+  finally
+    LAPIDigPix.Free;
+  end;
+end;
+
+procedure TForm1.btnGetDetailsClick(Sender: TObject);
+begin
+  var
+  LAPIDigPix := TAPIDigPix.Create;
+  try
+    LAPIDigPix.AuthToken(edtExportedToken.Text);
+    var
+    LResult := LAPIDigPix.GetQrCode(edtGetDetailsQrId.Text);
     AddListBox(LResult);
     AddLog(LResult);
   finally
@@ -212,6 +240,15 @@ begin
     LStr := EmptyStr;
     if LJSONObj.TryGetValue<string>('exportedToken', LStr) then
       edtExportedToken.Text := LStr;
+    if LJSONObj.TryGetValue<string>('userTaxNumber', LStr) then
+      edtDePIXUserTaxNumber.Text := LStr;
+    if LJSONObj.TryGetValue<string>('webHook', LStr) then
+      edtDePIXCreateWebHook.Text := LStr;
+    if LJSONObj.TryGetValue<string>('secret', LStr) then
+      edtDePIXCreateSecret.Text := LStr;
+
+    if LJSONObj.TryGetValue<string>('GetDetails_QrId', LStr) then
+      edtGetDetailsQrId.Text := LStr;
   finally
     LJSONObj.Free;
   end;
@@ -238,7 +275,18 @@ begin
   var
   LJSONObj := TJSONObject.Create;
   try
-    LJSONObj.AddPair('exportedToken', edtExportedToken.Text);
+    if not edtExportedToken.Text.Trim.IsEmpty then
+      LJSONObj.AddPair('exportedToken', edtExportedToken.Text);
+    if not edtDePIXUserTaxNumber.Text.Trim.IsEmpty then
+      LJSONObj.AddPair('userTaxNumber', edtDePIXUserTaxNumber.Text);
+    if not edtDePIXCreateWebHook.Text.Trim.IsEmpty then
+      LJSONObj.AddPair('webHook', edtDePIXCreateWebHook.Text);
+    if not edtDePIXCreateSecret.Text.Trim.IsEmpty then
+      LJSONObj.AddPair('secret', edtDePIXCreateSecret.Text);
+
+    if not edtGetDetailsQrId.Text.Trim.IsEmpty then
+      LJSONObj.AddPair('GetDetails_QrId', edtGetDetailsQrId.Text);
+
     TFile.WriteAllText(CConfigFileName, LJSONObj.ToString);
   finally
     LJSONObj.Free;

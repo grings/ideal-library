@@ -88,12 +88,13 @@ object Form1: TForm1
       Size.Height = 158.000000000000000000
       Size.PlatformDefault = False
       TabOrder = 6
+      ShowScrollBars = False
       Viewport.Width = 856.000000000000000000
-      Viewport.Height = 142.000000000000000000
+      Viewport.Height = 158.000000000000000000
       object gbxDePIXCreate: TGroupBox
         Align = Left
         Size.Width = 329.000000000000000000
-        Size.Height = 142.000000000000000000
+        Size.Height = 158.000000000000000000
         Size.PlatformDefault = False
         Text = 'Create DePIX QRCode   '
         TabOrder = 0
@@ -117,7 +118,7 @@ object Form1: TForm1
           TextSettings.FontColor = claRed
           TextSettings.HorzAlign = Center
           Text = 'Amount in R$, e.g.: R$10.50'
-          TabOrder = 4
+          TabOrder = 5
           TabStop = False
         end
         object lblAmount: TLabel
@@ -131,7 +132,7 @@ object Form1: TForm1
           Size.PlatformDefault = False
           TextSettings.WordWrap = False
           Text = 'Amount *'
-          TabOrder = 39
+          TabOrder = 40
           TabStop = False
         end
         object edtAmount: TEdit
@@ -148,7 +149,7 @@ object Form1: TForm1
           Size.Width = 100.000000000000000000
           Size.Height = 22.000000000000000000
           Size.PlatformDefault = False
-          TabOrder = 40
+          TabOrder = 41
           TabStop = False
           Text = 'Create'
           TextSettings.Trimming = None
@@ -168,7 +169,7 @@ object Form1: TForm1
           TabOrder = 2
           Position.X = 86.000000000000000000
           Position.Y = 96.000000000000000000
-          Size.Width = 208.000000000000000000
+          Size.Width = 114.000000000000000000
           Size.Height = 22.000000000000000000
           Size.PlatformDefault = False
         end
@@ -181,7 +182,7 @@ object Form1: TForm1
           Size.PlatformDefault = False
           TextSettings.WordWrap = False
           Text = 'Address'
-          TabOrder = 44
+          TabOrder = 45
           TabStop = False
         end
         object Label16: TLabel
@@ -193,15 +194,16 @@ object Form1: TForm1
           Size.PlatformDefault = False
           TextSettings.WordWrap = False
           Text = 'Split Address'
-          TabOrder = 43
+          TabOrder = 44
           TabStop = False
         end
         object edtSplitFee: TEdit
           Touch.InteractiveGestures = [LongTap, DoubleTap]
           TabOrder = 3
           FilterChar = '0123456789.'
-          Position.X = 86.000000000000000000
-          Position.Y = 126.000000000000000000
+          Position.X = 208.000000000000000000
+          Position.Y = 96.000000000000000000
+          TextPrompt = 'Split Fee'
           OnTyping = edtExportedTokenTyping
         end
         object Label4: TLabel
@@ -210,27 +212,32 @@ object Form1: TForm1
           HitTest = True
           Position.X = 8.000000000000000000
           Position.Y = 132.000000000000000000
-          Size.Width = 46.000000000000000000
+          Size.Width = 61.000000000000000000
           Size.Height = 16.000000000000000000
           Size.PlatformDefault = False
           TextSettings.WordWrap = False
-          Text = 'Split Fee'
-          TabOrder = 38
+          Text = 'TaxNumber'
+          TabOrder = 39
           TabStop = False
         end
-        object cbxIsLightning: TCheckBox
-          Position.X = 194.000000000000000000
-          Position.Y = 129.000000000000000000
-          TabOrder = 45
-          TabStop = False
-          Text = 'Ligthning'
+        object edtUserTaxNumber: TEdit
+          Touch.InteractiveGestures = [LongTap, DoubleTap]
+          TabOrder = 4
+          FilterChar = '0123456789'
+          Position.X = 86.000000000000000000
+          Position.Y = 126.000000000000000000
+          Size.Width = 222.000000000000000000
+          Size.Height = 22.000000000000000000
+          Size.PlatformDefault = False
+          TextPrompt = 'CPF or CNPJ (numbers only)'
+          OnTyping = edtExportedTokenTyping
         end
       end
       object gbxDepositList: TGroupBox
         Align = Left
         Position.X = 585.000000000000000000
         Size.Width = 296.000000000000000000
-        Size.Height = 142.000000000000000000
+        Size.Height = 158.000000000000000000
         Size.PlatformDefault = False
         Text = 'Deposit List   '
         TabOrder = 2
@@ -319,7 +326,7 @@ object Form1: TForm1
         Align = Left
         Position.X = 329.000000000000000000
         Size.Width = 256.000000000000000000
-        Size.Height = 142.000000000000000000
+        Size.Height = 158.000000000000000000
         Size.PlatformDefault = False
         Text = 'Deposit Status   '
         TabOrder = 1

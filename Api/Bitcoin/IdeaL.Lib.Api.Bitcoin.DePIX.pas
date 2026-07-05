@@ -108,18 +108,16 @@ type
     /// <param name="ASplitFee"> Optional Split Fee (the percentage of
     /// amountInCents that will be splitted and sent to depixSplitAddress)
     /// </param>
-    /// <param name="ALightning"> Optional lightning boolean flag
-    /// This parameter confirms that the Token must be sent straight to a LN address
-    /// Confirmed on Telegram support channel on 2025-10-12
-    /// Not tested yet...
+    /// <param name="AEndUserTaxNumber"> Required End user tax number
+    /// Required since 2026-07-01
     /// </param>
-    function PostDeposit(AAmountInCents: Integer): string; overload;
+    function PostDeposit(AAmountInCents: Integer; AEndUserTaxNumber: string): string; overload;
     function PostDeposit(
       AAmountInCents: Integer;
       ADepixAddress: string;
       ADepixSplitAddress: string;
       ASplitFee: string;
-      ALightning: Boolean): string; overload;
+      AEndUserTaxNumber: string): string; overload;
     { public declarations }
   end;
 
@@ -251,6 +249,22 @@ function TAPIDePix.GetDeposits(AStart, AEnd, AStatus: string): string;
 var
   LUrl: string;
 begin
+(*
+  Expected response on 2026-07-05
+{
+  "response": {
+      "expiration": "2026-07-05T06:29:06-03:00",
+      "payerEUID": "EU013206491353926",
+      "payerName": "",
+      "payerTaxNumber": "***.186.140-**",
+      "pixKey": "compra.depix.sem.estorno@plebank.com.br",
+      "qrId": "019f3189de7c7bd8936f0bee33a8c8cb",
+      "status": "pending",
+      "valueInCents": 5000
+  },
+  "async": false
+}
+*)
   LUrl := Format('%s/deposits?start=%s&end=%s', [CUrlApi, AStart, AEnd]);
   if not AStatus.Trim.IsEmpty then
     LUrl := LUrl + '&status=' + AStatus;
@@ -367,13 +381,13 @@ begin
 {$ENDIF}
 end;
 
-function TAPIDePix.PostDeposit(AAmountInCents: Integer): string;
+function TAPIDePix.PostDeposit(AAmountInCents: Integer; AEndUserTaxNumber: string): string;
 begin
-  Result := PostDeposit(AAmountInCents, EmptyStr, EmptyStr, EmptyStr, False);
+  Result := PostDeposit(AAmountInCents, EmptyStr, EmptyStr, EmptyStr, AEndUserTaxNumber);
 end;
 
 function TAPIDePix.PostDeposit(AAmountInCents: Integer; ADepixAddress,
-  ADepixSplitAddress, ASplitFee: string; ALightning: Boolean): string;
+  ADepixSplitAddress, ASplitFee, AEndUserTaxNumber: string): string;
 var
   LUrl: string;
   LBody: string;
@@ -404,11 +418,28 @@ endUserTaxNumber: string - write-only - optional - End user tax number
 whitelist: boolean - write-only - optional - Optional whitelist flag Default: false
 delayDepixInHours: integer - write-only - optional - Optional number of hours to delay the DePix payment (min 1, max 720). If omitted, the payment is processed immediately.
 merchantId: string - optional - EUID of the merchant.
+
+Expected response on 2026-07-05
+{
+    "response": {
+        "id": "019f3189de7c7bd8936f0bee33a8c8cb",
+        "qrCopyPaste": "00020101021226790014br.gov.bcb.pix2557brcode.starkinfra.com/v2/49bca9d7179d4fa8970ea11b2c3e73395204000053039865802BR5909Transfero6014Rio de Janeiro62070503***630455D5",
+        "qrImageUrl": "https://response.eulen.app/api-response/068db4cc-8847-48bc-bacc-20b1d481cae2-qr.png"
+    },
+    "async": false
+}
 *)
 
   // Differ from official Doc, personal decision to limit it from R$1,00+
   if (AAmountInCents < 100) or (AAmountInCents > 10000000) then
     raise Exception.Create('Invalid value [amount]');
+  AEndUserTaxNumber := AEndUserTaxNumber.Trim;
+  if
+    (AEndUserTaxNumber.IsEmpty) or
+    (AEndUserTaxNumber.Length < 11) or
+    (AEndUserTaxNumber.Length > 14)
+  then
+    raise Exception.Create('Invalid value [endUserTaxNumber]');
 
   LUrl := Format('%s/%s', [CUrlApi, 'deposit']);
   LBody := EmptyStr;
@@ -417,6 +448,7 @@ merchantId: string - optional - EUID of the merchant.
   try
     LJsonObject := LJsonData as TJSONObject;
     LJsonObject.Add('amountInCents', AAmountInCents);
+    LJsonObject.Add('endUserTaxNumber', AEndUserTaxNumber);
     if not ADepixAddress.Trim.IsEmpty then
       LJsonObject.Add('depixAddress', ADepixAddress);
     if (not ADepixSplitAddress.Trim.IsEmpty) and (not ASplitFee.Trim.IsEmpty) then
@@ -435,6 +467,7 @@ merchantId: string - optional - EUID of the merchant.
   LJSONObj := TJSONObject.Create;
   try
     LJSONObj.AddPair('amountInCents', AAmountInCents);
+    LJSONObj.AddPair('endUserTaxNumber', AEndUserTaxNumber);
     if not ADepixAddress.Trim.IsEmpty then
       LJSONObj.AddPair('depixAddress', ADepixAddress);
 
@@ -443,8 +476,6 @@ merchantId: string - optional - EUID of the merchant.
       LJSONObj.AddPair('depixSplitAddress', ADepixSplitAddress);
       LJSONObj.AddPair('splitFee', FormatFloat('0.00', ASplitFee.ToDouble) + '%');
     end;
-    if ALightning then
-      LJSONObj.AddPair('lightning', ALightning);
     LBody := LJSONObj.ToString
   finally
     LJSONObj.Free;

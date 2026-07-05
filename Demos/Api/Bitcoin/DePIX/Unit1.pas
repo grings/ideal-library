@@ -42,8 +42,6 @@ type
     btnQrCodePicClose: TButton;
     imgQrCode: TImage;
     edtSplitFee: TEdit;
-    Label4: TLabel;
-    cbxIsLightning: TCheckBox;
     gbxDepositList: TGroupBox;
     Label7: TLabel;
     btnGetDepositsList: TButton;
@@ -56,6 +54,8 @@ type
     dedtEnd: TDateEdit;
     cbxStatus: TComboBox;
     Label12: TLabel;
+    Label4: TLabel;
+    edtUserTaxNumber: TEdit;
     procedure btnPrivateDataShowHideClick(Sender: TObject);
     procedure edtExportedTokenTyping(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -134,7 +134,7 @@ begin
       edtAddress.Text,
       edtSplitAddress.Text,
       edtSplitFee.Text,
-      cbxIsLightning.IsChecked);
+      edtUserTaxNumber.Text);
     AddListBox('Create', LResult);
   finally
     LAPI.Free;
@@ -230,6 +230,7 @@ end;
 
 procedure TForm1.FormShow(Sender: TObject);
 begin
+  HorzScrollBox1.ShowScrollBars := True;
   LoadData;
   QrCodePicHide;
 end;
